@@ -37,10 +37,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  edit(varient: any,name:string): void {
+  edit(varient: any, name: string): void {
     this.bottomSheet.open(EditproductComponent, {
-      data: { varient: varient ,name: name},
+      data: { varient: varient, name: name },
       panelClass: 'custom-width',
+    }).afterDismissed().subscribe(res => {
+      this.fetch();
     });
   }
 

@@ -9,14 +9,29 @@
                 <input (keypress)="numberOnly($event)" matInput placeholder="price" formControlName="price">
             </mat-form-field>
         </div>
+
         <div class="col">
-            <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
+            <mat-form-field>
+                <mat-label>MRP</mat-label>
+                <input (keypress)="numberOnly($event)" matInput placeholder="mrp" formControlName="mrp">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-slide-toggle formControlName="is_available">Available</mat-slide-toggle>
+        </div>
+
+        <div class="col">
+            <mat-slide-toggle formControlName="is_available">Active</mat-slide-toggle>
+        </div>
+
+        <div class="col">
+            <mat-slide-toggle formControlName="is_allow_backorder">Allow backorder</mat-slide-toggle>
         </div>
 
         <div class="col">
             <mat-form-field>
-                <mat-label>Qty</mat-label>
-                <input matInput placeholder="Qty" formControlName="qty">
+                <mat-label>Stock</mat-label>
+                <input matInput placeholder="stock" formControlName="stock">
             </mat-form-field>
         </div>
     </div>
