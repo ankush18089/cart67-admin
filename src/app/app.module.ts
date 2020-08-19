@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -40,10 +40,20 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { SerializePipe } from './serialize.pipe';
+import { DatePipe } from '@angular/common';
+import { AuthService } from './services/auth.service';
+import { TokenInterceptor } from './services/token-interceptor.service';
+import { EditproductComponent } from './editproduct/editproduct.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    SerializePipe,
+    EditproductComponent
   ],
   imports: [
     BrowserModule,
@@ -55,10 +65,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatPaginatorModule,
     MatTableModule,
     ReactiveFormsModule,
-    BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,
@@ -95,7 +102,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatTooltipModule,
     MatTreeModule
   ],
-  providers: [],
+  entryComponents: [
+    EditproductComponent
+  ],
+  providers: [DatePipe, SerializePipe, AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,27 @@
+<form [formGroup]="varientForm">
+    <div class="row">
+        <h2>{{this.data.name}},{{this.data.varient.name}}</h2>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field>
+                <mat-label>price</mat-label>
+                <input (keypress)="numberOnly($event)" matInput placeholder="price" formControlName="price">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
+        </div>
+
+        <div class="col">
+            <mat-form-field>
+                <mat-label>Qty</mat-label>
+                <input matInput placeholder="Qty" formControlName="qty">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <button class="mr-2" mat-raised-button color="accent" (click)="save()">Save</button>
+        <button mat-raised-button color="accent" (click)="close()">Close</button>
+    </div>
+</form>
