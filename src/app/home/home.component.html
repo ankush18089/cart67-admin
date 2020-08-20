@@ -1,4 +1,4 @@
-<button mat-raised-button color="primary" (click)="logout()">Logout</button>
+
 <mat-table [dataSource]="result" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -15,20 +15,23 @@
         <mat-cell *matCellDef="let element">
             <button *ngIf="element.product_type==='SIMPLE'; else elseBlock" mat-icon-button color="primary"
                 (click)="edit(element.variants[0],element.name)">
+                <i class="fa fa-inr"></i>{{element.variants[0].price}}
                 <mat-icon>edit</mat-icon>
             </button>
             <ng-template #elseBlock>
-
-                <div class="row" *ngFor="let varient of element.variants">
-                    <div class="col"> <label>
-                            {{varient.name}}
-                        </label></div>
-                    <div class="col"> <button mat-icon-button color="primary" (click)="edit(varient,element.name)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr *ngFor="let varient of element.variants">
+                            <td> {{varient.name}}</td>
+                            <td>
+                                <button mat-icon-button color="primary" (click)="edit(varient,element.name)">
+                                    <i class="fa fa-inr"></i>{{varient.price}}
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
             </ng-template>
 
             <button mat-icon-button color="warn">

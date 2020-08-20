@@ -21,10 +21,20 @@ export class HomeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
     }
+    if (localStorage.getItem('store') === 'none') {
+      this.router.navigate(['/nostore']);
+    }
+    this.product.getUser().subscribe(user => {
+      this.product.isLoggedIn.next(true);
+      this.product.user.next(user['name']);
+    });
+
+
     this.product.getProducts('0', '10').subscribe(res => {
       this.result = res['content'];
       this.paginator.length = res['totalElements']
@@ -42,7 +52,9 @@ export class HomeComponent implements OnInit {
       data: { varient: varient, name: name },
       panelClass: 'custom-width',
     }).afterDismissed().subscribe(res => {
-      this.fetch();
+      if (res) {
+        this.fetch();
+      }
     });
   }
 

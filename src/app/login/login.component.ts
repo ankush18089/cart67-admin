@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({ username: [''], password: [''] });
-  constructor(private fb: FormBuilder, private auth: AuthService, private route: Router) { }
+  constructor(
+    private product: ProductService,
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: Router) { }
   error: string;
   ngOnInit(): void {
     this.error = '';

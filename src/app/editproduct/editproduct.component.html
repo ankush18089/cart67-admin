@@ -6,14 +6,28 @@
         <div class="col">
             <mat-form-field>
                 <mat-label>price</mat-label>
-                <input (keypress)="numberOnly($event)" matInput placeholder="price" formControlName="price">
+                <input (keypress)="numberOnly($event)" matInput placeholder="price" formControlName="price" required>
             </mat-form-field>
+            <div class="alert alert-danger"
+                *ngIf="this.varientForm.controls['price'].value>this.varientForm.controls['mrp'].value">
+                Price can't be greater than MRP
+            </div>
+
+            <div class="alert alert-danger"  *ngIf="this.varientForm.controls['price'].getError('required')">
+                Price is required.
+            </div>
+
+            <!-- <div class="alert alert-danger" *ngIf="this.varientForm.controls['price'].errors">
+                <sup>*</sup> Price can't be greater than MRP
+            </div> -->
         </div>
+
 
         <div class="col">
             <mat-form-field>
                 <mat-label>MRP</mat-label>
-                <input (keypress)="numberOnly($event)" matInput placeholder="mrp" formControlName="mrp">
+                <input required [(ngModel)]="mrp" (keypress)="numberOnly($event)" matInput placeholder="mrp"
+                    formControlName="mrp">
             </mat-form-field>
         </div>
         <div class="col">
@@ -31,12 +45,13 @@
         <div class="col">
             <mat-form-field>
                 <mat-label>Stock</mat-label>
-                <input matInput placeholder="stock" formControlName="stock">
+                <input matInput (keypress)="numberOnly($event)" placeholder="stock" formControlName="stock">
             </mat-form-field>
         </div>
     </div>
     <div class="row mt-2">
-        <button class="mr-2" mat-raised-button color="accent" (click)="save()">Save</button>
-        <button mat-raised-button color="accent" (click)="close()">Close</button>
+        <button [disabled]="this.varientForm.invalid" class="mr-2" mat-raised-button color="primary"
+            (click)="save()">Save</button>
+        <button mat-raised-button color="primary" (click)="close()">Close</button>
     </div>
 </form>

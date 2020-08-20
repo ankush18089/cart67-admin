@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { ProfileComponent } from './profile/profile.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,13 +49,20 @@ import { DatePipe } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/token-interceptor.service';
 import { EditproductComponent } from './editproduct/editproduct.component';
+
+import { HeaderComponent } from './header/header.component';
+import { StoreMessageComponent } from './store-message/store-message.component';
 @NgModule({
   declarations: [
+    ProfileComponent,
+    EditprofileComponent,
+    HeaderComponent,
     AppComponent,
     HomeComponent,
     LoginComponent,
     SerializePipe,
-    EditproductComponent
+    EditproductComponent,
+    StoreMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +112,8 @@ import { EditproductComponent } from './editproduct/editproduct.component';
     MatTreeModule
   ],
   entryComponents: [
-    EditproductComponent
+    EditproductComponent,
+    EditprofileComponent
   ],
   providers: [DatePipe, SerializePipe, AuthService, {
     provide: HTTP_INTERCEPTORS,

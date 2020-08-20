@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css?family=Dosis|Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+SC&display=swap');
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-width {
     min-width: 100vw !important;
     background-color: #f9f9f9;
-    min-height: 200vw;
+    min-height: 50vh;
 }

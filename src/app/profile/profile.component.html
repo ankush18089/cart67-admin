@@ -1,0 +1,25 @@
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+        <h6 class="font-weight-bold mb-3">Profile</h6>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Name <span class="pull-right">{{res.name}}</span>
+            </li>
+            <li class="list-group-item">
+                Email <span class="pull-right"> {{res.email}}</span>
+            </li>
+            <li class="list-group-item">
+                Gender <span class="pull-right"> {{res.gender}}</span>
+            </li>
+            <li class="list-group-item">
+                Date of birth <span class="pull-right"> {{res.dob}}</span>
+            </li>
+            <li class="list-group-item">
+                Mobile number <span class="pull-right"> {{res.mobile}}</span>
+            </li>
+
+        </ul>
+        <div class="row mt-2 d-flex justify-content-center"> <button mat-raised-button color="accent" (click)="openBottomSheet()">Edit profile</button></div>
+
+    </div>
+</div>
