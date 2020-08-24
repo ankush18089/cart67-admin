@@ -1,6 +1,6 @@
 #navigationCart {
     background-color: #182C51;
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
     z-index: 9;
 }

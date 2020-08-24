@@ -1,0 +1,49 @@
+<div class="card-header">
+   <label *ngIf="this.data.action === 'update'">Update Offer</label> 
+   <label *ngIf="this.data.action === 'add'">Add Offer</label> 
+</div>
+<div class="card-body">
+    <form [formGroup]="addOffer" (ngSubmit)="create()">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="title" formControlName="title" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Picture</mat-label>
+                    <input matInput placeholder="picture" formControlName="picture" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Sub text</mat-label>
+                    <input matInput placeholder="subText" formControlName="sub_text" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Type</mat-label>
+                    <input matInput placeholder="type" formControlName="type" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <button type="submit" mat-raised-button color="accent">Save</button>
+        </div>
+
+    </form>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
+</ngx-spinner>

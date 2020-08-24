@@ -49,9 +49,12 @@ import { DatePipe } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/token-interceptor.service';
 import { EditproductComponent } from './editproduct/editproduct.component';
-
 import { HeaderComponent } from './header/header.component';
 import { StoreMessageComponent } from './store-message/store-message.component';
+import { OffersComponent } from './offers/offers.component';
+import { AddOfferComponent } from './add-offer/add-offer.component';
+import { MasterProductComponent } from './master-product/master-product.component';
+import { PopupmessageComponent } from './popupmessage/popupmessage.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -62,7 +65,11 @@ import { StoreMessageComponent } from './store-message/store-message.component';
     LoginComponent,
     SerializePipe,
     EditproductComponent,
-    StoreMessageComponent
+    StoreMessageComponent,
+    OffersComponent,
+    AddOfferComponent,
+    MasterProductComponent,
+    PopupmessageComponent
   ],
   imports: [
     BrowserModule,
@@ -112,8 +119,10 @@ import { StoreMessageComponent } from './store-message/store-message.component';
     MatTreeModule
   ],
   entryComponents: [
+    PopupmessageComponent,
     EditproductComponent,
-    EditprofileComponent
+    EditprofileComponent,
+    AddOfferComponent
   ],
   providers: [DatePipe, SerializePipe, AuthService, {
     provide: HTTP_INTERCEPTORS,

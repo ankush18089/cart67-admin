@@ -1,0 +1,43 @@
+<button mat-raised-button (click)="add()">Add new</button>
+
+<mat-table [dataSource]="offers" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="picture">
+        <mat-header-cell *matHeaderCellDef> Picture </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <img width="20%" src={{element.picture}} class="rounded-circle" alt="Cinque Terre"> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{element.type}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="subText">
+        <mat-header-cell *matHeaderCellDef> subText </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{element.sub_text}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button color="primary" (click)="update(element)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(element.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator class="mt-4" [pageSizeOptions]="[3,5,8]" (page)="fetch()">
+</mat-paginator>

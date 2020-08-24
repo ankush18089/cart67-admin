@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
-import { BehaviorSubject } from 'rxjs';
-
+import * as uuid from 'uuid';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -22,11 +21,14 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.product.getStores().subscribe(res => {
-      this.stores = res['content'];
-      if (localStorage.getItem('store')) {
-        this.selectedStore = localStorage.getItem('store');
-      }
+    if (localStorage.getItem('store')) {
+      this.selectedStore = localStorage.getItem('store');
+    }else{
+      localStorage.setItem('store', this.selectedStore);
+    }
+
+    this.product.stores.subscribe(res => {
+      this.stores = res;
     });
     this.product.user.subscribe(res => {
       this.user = res;
@@ -37,14 +39,22 @@ export class HeaderComponent implements OnInit {
     })
   }
   storeChange() {
+    console.log();
     localStorage.setItem('store', this.selectedStore);
     this.checkForStore();
   }
 
   checkForStore() {
     if (localStorage.getItem('store') === 'none') {
+      this.product.storeId.next('none');
       this.router.navigate(['/nostore']);
+
     } else {
+      this.product.storeId.next(localStorage.getItem('store'));
+      this.product.getProducts('0', '10', '').subscribe(res => {
+        this.product.products.next(res['content']);
+      });
+     // this.router.navigate(['/home'],{ queryParams: { value: uuid.v4() } });
       this.router.navigate(['/home']);
     }
   }

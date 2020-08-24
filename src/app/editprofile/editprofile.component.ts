@@ -3,7 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DatePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '../services/product.service';
 @Component({
   selector: 'app-editprofile',
@@ -14,7 +13,6 @@ import { ProductService } from '../services/product.service';
 export class EditprofileComponent implements OnInit {
   profile: FormGroup;
   constructor(
-    private snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private bottomSheet: MatBottomSheet,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -22,7 +20,7 @@ export class EditprofileComponent implements OnInit {
     private product: ProductService,
     private spinner: NgxSpinnerService
   ) { }
-
+ 
   ngOnInit(): void {
     this.profile = this.formBuilder.group({
       name: [this.data.user.name, Validators.required],
@@ -46,7 +44,7 @@ export class EditprofileComponent implements OnInit {
     user.dob = this.datePipe.transform(this.profile.get('dob').value, 'yyyy-MM-dd');
     user.email = this.profile.get('email').value;
     user.gender = this.profile.get('gender').value;
-    this.product.updateProfile(JSON.stringify(user)).subscribe(res => {
+    this.product.updateProfile(JSON.stringify(user)).subscribe(() => {
       this.spinner.hide();
       this.bottomSheet.dismiss();
     });

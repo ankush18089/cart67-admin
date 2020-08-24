@@ -10,8 +10,18 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  storeId: string;
+  constructor(private product: ProductService, public authService: AuthService) {
+    // if (localStorage.getItem('store')) {
+    //   this.storeId = localStorage.getItem('store');
+    //   console.log(localStorage.getItem('store'));
+    // } else {
+    //   this.storeId = '';
+    // }
 
-  constructor(private product: ProductService,public authService: AuthService) {
+    this.product.storeId.subscribe(res => {
+      this.storeId = res;
+    })
   }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -37,7 +47,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return request.clone({
       setHeaders: {
         'Authorization': `Bearer ${token}`,
-        'store-id': localStorage.getItem('store')
+        'store-id': this.storeId
       }
     });
   }

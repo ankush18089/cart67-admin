@@ -8,14 +8,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./store-message.component.css']
 })
 export class StoreMessageComponent implements OnInit {
-
-  constructor( private product: ProductService, private router: Router) { }
+  constructor(private product: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.product.getUser().subscribe(user => {
       this.product.isLoggedIn.next(true);
       this.product.user.next(user['name']);
     });
+
+    this.product.getStores().subscribe(res => {
+      this.product.stores.next(res['content']);
+    });
   }
+
 
 }

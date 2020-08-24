@@ -12,7 +12,6 @@ import { ProductService } from '../services/product.service';
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({ username: [''], password: [''] });
   constructor(
-    private product: ProductService,
     private fb: FormBuilder,
     private auth: AuthService,
     private route: Router) { }

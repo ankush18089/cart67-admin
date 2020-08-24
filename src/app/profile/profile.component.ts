@@ -28,6 +28,15 @@ export class ProfileComponent implements OnInit {
       this.route.navigate(['/login']);
       return;
     }
+
+    this.product.getUser().subscribe(user => {
+      this.product.isLoggedIn.next(true);
+      this.product.user.next(user['name']);
+    });
+
+    this.product.getStores().subscribe(res => {
+      this.product.stores.next(res['content']);
+    });
     this.spinner.show();
 
     this.product.getUser().subscribe(res => {
