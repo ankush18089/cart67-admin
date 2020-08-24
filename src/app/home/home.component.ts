@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -8,6 +8,7 @@ import { EditproductComponent } from '../editproduct/editproduct.component';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupmessageComponent } from '../popupmessage/popupmessage.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,9 +17,10 @@ import { PopupmessageComponent } from '../popupmessage/popupmessage.component';
 export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'picture', 'action'];
-  result: any[];
+  result: any[]=[];
   myForm = this.fb.group({ query: [''] });
   value: any;
+  length:number;
   constructor(
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
@@ -26,8 +28,7 @@ export class HomeComponent implements OnInit {
     private auth: AuthService,
     private product: ProductService,
     private router: Router,
-
-    private route: ActivatedRoute) { }
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
 
@@ -40,6 +41,10 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/nostore']);
       return;
     }
+    this.product.productsLength.subscribe(res=>{
+      this.length=res;
+    });
+    this.spinner.show();
     this.product.storeId.next(localStorage.getItem('store'));
     this.product.products.subscribe(res => {
       this.result = res;
@@ -52,18 +57,26 @@ export class HomeComponent implements OnInit {
       this.product.isLoggedIn.next(true);
       this.product.user.next(user['name']);
     });
-
     this.product.getProducts('0', '10', '').subscribe(res => {
+      this.spinner.hide();
       this.result = res['content'];
       this.product.products.next(res['content']);
-      this.paginator.length = res['totalElements'];
+      this.length=res['totalElements'];
+    }, error => {
+      console.log('error occurred while getting data from server : ' + error.status);
+      this.spinner.hide();
     });
   }
   fetch() {
+    this.spinner.show();
     this.myForm.get('query').setValue('');
     this.product.getProducts(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString(), '').subscribe(res => {
       this.result = res['content'];
-      this.paginator.length = res['totalElements'];
+      this.length=res['totalElements'];
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      console.log('error occurred while getting data from server  : ' + error.status);
     });
   }
 
@@ -90,6 +103,8 @@ export class HomeComponent implements OnInit {
           data: { data: 'removed  successfully' }
         });
       }
+    }, error => {
+      console.log('error occurred while getting data from server   : ' + error.status);
     });
   }
 
@@ -100,9 +115,14 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   find() {
+    this.spinner.show();
     this.product.getProducts(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString(), this.myForm.get('query').value).subscribe(res => {
       this.result = res['content'];
-      this.paginator.length = res['totalElements']
+      this.length=res['totalElements'];
+      this.spinner.hide();
+    }, error => {
+      console.log('error occurred while getting data from server   : ' + error.status);
+      this.spinner.hide();
     });
   }
 

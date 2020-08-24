@@ -6,13 +6,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { StoreMessageComponent } from './store-message/store-message.component';
 import { OffersComponent } from './offers/offers.component';
 import { MasterProductComponent } from './master-product/master-product.component';
+import { CollectionsComponent } from './collections/collections.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'master', component: MasterProductComponent },
+  { path: 'collections', component: CollectionsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'nostore', component: StoreMessageComponent },
   { path: 'offers', component: OffersComponent },
-  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: HomeComponent }
 ];

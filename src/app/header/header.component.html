@@ -1,51 +1,26 @@
-<div id="navigationCart" class="navbar site-navbar">
-    <div class="container p-0">
-        <div class="col-lg-3 col-xl-3 col-sm-3 p-0">
-            <a class="routernav" (click)="checkForStore()">
-                <h1 class="sitetitlers">
-                    {{title}}
-                </h1>
-            </a>
-        </div>
-        <div class="col-lg-3 col-xl-3 col-sm-3 p-0" *ngIf="isLoggedIn">
 
-
-
-            <div class="nav-items">
-                <div class="nav-link">
-                    <a [matMenuTriggerFor]="menu" class="profileName">
-                        Hello, {{user}} <i class="fas fa-caret-down"></i>
-                    </a>
-
-
-                    <mat-menu class="profilemainmenu" #menu="matMenu">
-                        <ul class="profileMenu">
-                            <li><a routerLink="/profile"><i class="fas fa-user-circle"></i> My Profile</a></li>
-                            <li><a routerLink="/offers"><i class="fas fa-user-circle"></i> Manage offers</a></li>
-                            <li><a routerLink="/master"><i class="fas fa-user-circle"></i> Add products from master</a>
-                            </li>
-
-                            <li>
-                                <a (click)="logout()">
-                                    <i (click)="logout()" class="fas fa-sign-out-alt"></i> <span
-                                        class="icon-label-space"> Logout</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-menu>
-
-                    <i class="fas fa-map-marker-alt" style="color: white;"></i>
-                    <mat-select [(value)]="selectedStore" (selectionChange)="storeChange()">
-                        <mat-option value="none">
-                            None
-                        </mat-option>
-                        <mat-option *ngFor="let store of stores" value={{store.id}}>
-                            {{store.name}}
-                        </mat-option>
-                    </mat-select>
-
-                </div>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="">Cart67 admin</a>
+    <span class="example-spacer"></span>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <mat-select style="width: 8vw;" *ngIf="isLoggedIn" [(value)]="selectedStore" (selectionChange)="storeChange()">
+            <mat-option value="none">
+                None
+            </mat-option>
+            <mat-option *ngFor="let store of stores" value={{store.id}}>
+                {{store.name}}
+            </mat-option>
+        </mat-select>
+        
+       
+            <ul class="navbar-nav" *ngIf="isLoggedIn">
+                <li class="nav-item active">
+                    <a  class="nav-link" routerLink="/profile">{{user}}</a>
+                </li>
+                <li  class="nav-item active">
+                    <button class="nav-link" (click)="logout()" type="button" class="btn btn-light">Logout <span class="sr-only">(current)</span></button>
+                </li>
+            </ul>
     </div>
-</div>
+
+</nav>

@@ -8,7 +8,11 @@ import { ProductService } from './services/product.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isLoggedIn:Boolean;
   title = 'cart67-admin';
-  constructor() {
+  constructor( private product: ProductService,) {
+    this.product.isLoggedIn.subscribe(res => {
+      this.isLoggedIn = res;
+    });
   }
 }

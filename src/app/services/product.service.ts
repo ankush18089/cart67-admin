@@ -10,6 +10,7 @@ export class ProductService {
   public isLoggedIn = new BehaviorSubject<boolean>(false);
   public stores = new BehaviorSubject<any[]>([]);
   public products = new BehaviorSubject<any[]>([]);
+  public productsLength = new BehaviorSubject<number>(0);
   public storeId = new BehaviorSubject<string>('');
   constructor(private http: HttpClient) { }
 
@@ -22,7 +23,29 @@ export class ProductService {
     });
   }
 
-  removeFromStore( id: number) {
+  getCollections(page: string, size: string) {
+    return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/app/collection', {
+      params: new HttpParams()
+        .set('page', page)
+        .set('size', size)
+    });
+  }
+
+  updateCollections(collectionId: number, data: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.put(`https://dapi.shunyafoundation.com/cart67-notification/api/collection/${collectionId}`, data, httpOptions);
+  }
+
+  deleteCollection(collectionId: number) {
+    return this.http.delete(`https://dapi.shunyafoundation.com/cart67-product/api/collection/${collectionId}`);
+  }
+
+
+  removeFromStore(id: number) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/product/remove', {
       params: new HttpParams()
         .set('id', id.toString())

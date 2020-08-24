@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
-import * as uuid from 'uuid';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -36,7 +35,7 @@ export class HeaderComponent implements OnInit {
 
     this.product.isLoggedIn.subscribe(res => {
       this.isLoggedIn = res;
-    })
+    });
   }
   storeChange() {
     console.log();
@@ -53,8 +52,8 @@ export class HeaderComponent implements OnInit {
       this.product.storeId.next(localStorage.getItem('store'));
       this.product.getProducts('0', '10', '').subscribe(res => {
         this.product.products.next(res['content']);
+        this.product.productsLength.next(res['totalElements']);
       });
-     // this.router.navigate(['/home'],{ queryParams: { value: uuid.v4() } });
       this.router.navigate(['/home']);
     }
   }

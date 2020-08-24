@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
-import { priceValidator } from '../validators/custom.validators';
 @Component({
   selector: 'app-editproduct',
   templateUrl: './editproduct.component.html',

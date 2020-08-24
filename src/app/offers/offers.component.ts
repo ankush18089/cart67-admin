@@ -17,6 +17,7 @@ export class OffersComponent implements OnInit {
     private product: ProductService) { }
 
   ngOnInit(): void {
+    this.product.storeId.next(localStorage.getItem('store'));
     this.fetch();
     this.product.getUser().subscribe(user => {
       this.product.isLoggedIn.next(true);

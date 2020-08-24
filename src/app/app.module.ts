@@ -55,6 +55,8 @@ import { OffersComponent } from './offers/offers.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
 import { MasterProductComponent } from './master-product/master-product.component';
 import { PopupmessageComponent } from './popupmessage/popupmessage.component';
+import { CollectionsComponent } from './collections/collections.component';
+import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -69,7 +71,9 @@ import { PopupmessageComponent } from './popupmessage/popupmessage.component';
     OffersComponent,
     AddOfferComponent,
     MasterProductComponent,
-    PopupmessageComponent
+    PopupmessageComponent,
+    CollectionsComponent,
+    EditCollectionComponent
   ],
   imports: [
     BrowserModule,
@@ -122,13 +126,18 @@ import { PopupmessageComponent } from './popupmessage/popupmessage.component';
     PopupmessageComponent,
     EditproductComponent,
     EditprofileComponent,
+    EditCollectionComponent,
     AddOfferComponent
   ],
-  providers: [DatePipe, SerializePipe, AuthService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  }],
+  providers: [
+    DatePipe,
+    SerializePipe,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
