@@ -2,15 +2,26 @@
         <button mat-raised-button (click)="add()">Add new</button>
         <div *ngIf="this.result.length>0;else noproduct">
             <mat-table [dataSource]="result" class="mat-elevation-z8">
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef> title </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.item.title}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="picture">
-                    <mat-header-cell *matHeaderCellDef> Picture </mat-header-cell>
+                <ng-container matColumnDef="active">
+                    <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <img *ngIf="element.image_url" width="20%" src={{element.image_url}} class="" alt="Image unavailable">
-                        <img *ngIf="!element.image_url" width="20%" src="https://s3.shunyafoundation.com/s3/62fb0092aaed7a3bbdc452e9cda3d9ed0a8bb7e0/no-image.png" class="" alt="Image unavailable">
+                       <mat-slide-toggle (click)="fetch()" [(ngModel)]="element.active"></mat-slide-toggle>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.item.type}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="sequence">
+                    <mat-header-cell *matHeaderCellDef> Sequence </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.sequence}}
                     </mat-cell>
                 </ng-container>
 
@@ -21,8 +32,6 @@
                             (click)="edit(element)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        
-
                         <button mat-icon-button color="warn" (click)="delete(element.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -32,11 +41,6 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
-
-
-            <mat-paginator [length]="length"  [pageSizeOptions]="[10,50, 100,result.length]"
-                (page)="fetch()">
-            </mat-paginator>
         </div>
         <ng-template #noproduct>
             <div class="jumbotron d-flex align-items-center">

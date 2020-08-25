@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-
+ 
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;

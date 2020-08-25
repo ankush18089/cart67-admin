@@ -11,6 +11,7 @@ import { ProductService } from '../services/product.service';
 })
 export class AddOfferComponent implements OnInit {
   addOffer: FormGroup;
+  offerType: string = 'Information';
   constructor(
     private datePipe: DatePipe,
     private bottomSheet: MatBottomSheet,
@@ -20,22 +21,87 @@ export class AddOfferComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.offerType = this.data.offer.data.type;
     if (this.data.action === 'update') {
-      this.addOffer = this.formBuilder.group({
-        name: [this.data.offer.name, Validators.required],
-        title: [this.data.offer.title, Validators.required],
-        picture: [this.data.offer.picture, Validators.required],
-        sub_text: [this.data.offer.sub_text, Validators.required],
-        type: [this.data.offer.type, Validators.required]
-      });
+      if (this.data.offer.data.type == 'Information') {
+        this.addOffer = this.formBuilder.group({
+          name: [this.data.offer.name, Validators.required],
+          title: [this.data.offer.title, Validators.required],
+          picture: [this.data.offer.picture, Validators.required],
+          sub_text: [this.data.offer.sub_text, Validators.required],
+          data: this.formBuilder.group({
+            type: [this.data.offer.data.type, Validators.required]
+          })
+
+        });
+      }
+      if (this.data.offer.data.type == 'Collection') {
+        this.addOffer = this.formBuilder.group({
+          name: [this.data.offer.name, Validators.required],
+          title: [this.data.offer.title, Validators.required],
+          picture: [this.data.offer.picture, Validators.required],
+          sub_text: [this.data.offer.sub_text, Validators.required],
+          data: this.formBuilder.group({
+            type: [this.data.offer.data.type, Validators.required],
+            collection_id: [this.data.offer.data.collection_id, Validators.required],
+            button_text: [this.data.offer.data.button_text, Validators.required],
+          })
+        });
+
+      }
+
 
     } else {
+      if (this.offerType == 'Collection') {
+        this.addOffer = this.formBuilder.group({
+          name: ['', Validators.required],
+          title: ['', Validators.required],
+          picture: ['', Validators.required],
+          sub_text: ['', Validators.required],
+          data: this.formBuilder.group({
+            type: [this.offerType, Validators.required],
+            collection_id: ['', Validators.required],
+            button_text: ['', Validators.required],
+          })
+        });
+      }
+      if (this.offerType == 'Information') {
+        this.addOffer = this.formBuilder.group({
+          name: ['', Validators.required],
+          title: ['', Validators.required],
+          picture: ['', Validators.required],
+          sub_text: ['', Validators.required],
+          data: this.formBuilder.group({
+            type: [this.offerType, Validators.required]
+          })
+        });
+      }
+    }
+
+  }
+  typeChange() {
+    if (this.offerType == 'Collection') {
       this.addOffer = this.formBuilder.group({
         name: ['', Validators.required],
         title: ['', Validators.required],
         picture: ['', Validators.required],
         sub_text: ['', Validators.required],
-        type: ['']
+        data: this.formBuilder.group({
+          type: [this.offerType, Validators.required],
+          collection_id: ['', Validators.required],
+          button_text: ['', Validators.required],
+        })
+      });
+    }
+    if (this.offerType == 'Information') {
+      this.addOffer = this.formBuilder.group({
+        name: ['', Validators.required],
+        title: ['', Validators.required],
+        picture: ['', Validators.required],
+        sub_text: ['', Validators.required],
+        data: this.formBuilder.group({
+          type: [this.offerType, Validators.required]
+        })
       });
     }
 
@@ -43,12 +109,14 @@ export class AddOfferComponent implements OnInit {
   create() {
     this.spinner.show();
     if (this.data.action === 'update') {
+      console.log(JSON.stringify(this.addOffer.value));
       this.product.updateOffer(this.data.offer.id, JSON.stringify(this.addOffer.value)).subscribe(res => {
         console.log('updated successfully');
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
       });
     } else {
+      console.log(JSON.stringify(this.addOffer.value));
       this.product.createOffer(JSON.stringify(this.addOffer.value)).subscribe(res => {
         console.log('Added successfully');
         this.spinner.hide();

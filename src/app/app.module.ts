@@ -57,6 +57,8 @@ import { MasterProductComponent } from './master-product/master-product.componen
 import { PopupmessageComponent } from './popupmessage/popupmessage.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -73,7 +75,9 @@ import { EditCollectionComponent } from './edit-collection/edit-collection.compo
     MasterProductComponent,
     PopupmessageComponent,
     CollectionsComponent,
-    EditCollectionComponent
+    EditCollectionComponent,
+    DashboardComponent,
+    EditDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +130,7 @@ import { EditCollectionComponent } from './edit-collection/edit-collection.compo
     PopupmessageComponent,
     EditproductComponent,
     EditprofileComponent,
+    EditDashboardComponent,
     EditCollectionComponent,
     AddOfferComponent
   ],

@@ -1,0 +1,123 @@
+<div class="card-header">
+    <label *ngIf="this.data.action === 'update'">Update DashBoard</label>
+    <label *ngIf="this.data.action === 'add'">Add DashBoard</label>
+</div>
+<div class="card-body">
+    <form [formGroup]="addDashBoardItem" (ngSubmit)="create()">
+
+        <div class="row">
+
+            <div *ngIf="this.type=='Collection' else otherType" formGroupName="item">
+
+                <div class="col" *ngIf="this.data.action === 'add'">
+                    <mat-form-field>
+                        <mat-label>Select type</mat-label>
+                        <mat-select [(value)]="type" formControlName="type" (selectionChange)="typeChange()">
+                            <mat-option value="Collection">
+                                Collection
+                            </mat-option>
+                            <mat-option value="Category">
+                                Category
+                            </mat-option>
+                            <mat-option value="HealthBoard">
+                                HealthBoard
+                            </mat-option>
+                            <mat-option value="Offers">
+                                Offers
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field>
+                        <mat-label>title</mat-label>
+                        <input matInput placeholder="title" formControlName="title" required>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="this.data.action === 'add'" class="col">
+                    <mat-form-field>
+                        <mat-label>type</mat-label>
+                        <input matInput placeholder="type" formControlName="type" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field>
+                        <mat-label>img_url</mat-label>
+                        <input matInput placeholder="img_url" formControlName="img_url" required>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle formControlName="expanded" >expanded</mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-form-field>
+                        <mat-label>Choose collection</mat-label>
+                        <mat-select [(value)]="selectedCollection">
+                            <mat-option *ngFor="let collection of collections" value={{collection}}>
+                                {{collection.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <ng-template #otherType>
+                <div formGroupName="item">
+                    <div class="col-md-4" *ngIf="this.data.action === 'add'">
+                        <mat-form-field>
+                            <mat-label>Select type</mat-label>
+                            <mat-select [(value)]="type" formControlName="type" (selectionChange)="typeChange()">
+                                <mat-option value="Collection">
+                                    Collection
+                                </mat-option>
+                                <mat-option value="Category">
+                                    Category
+                                </mat-option>
+                                <mat-option value="HealthBoard">
+                                    HealthBoard
+                                </mat-option>
+                                <mat-option value="Offers">
+                                    Offers
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="this.data.action === 'add'" class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>type</mat-label>
+                            <input matInput placeholder="type" formControlName="type" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>title</mat-label>
+                            <input matInput placeholder="title" formControlName="title" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-template>
+
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field>
+                    <mat-label>sequence</mat-label>
+                    <input matInput placeholder="sequence" formControlName="sequence" required>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-slide-toggle formControlName="active" >active</mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <button type="submit" mat-raised-button color="accent">Save</button>
+        </div>
+
+    </form>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
+</ngx-spinner>

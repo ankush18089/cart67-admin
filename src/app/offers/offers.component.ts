@@ -3,6 +3,8 @@ import { ProductService } from '../services/product.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AddOfferComponent } from '../add-offer/add-offer.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
@@ -14,9 +16,19 @@ export class OffersComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(
     private bottomSheet: MatBottomSheet,
-    private product: ProductService) { }
+    private auth: AuthService,
+    private product: ProductService,
+    private router: Router) { }
 
   ngOnInit(): void {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (localStorage.getItem('store') === 'none' || !localStorage.getItem('store')) {
+      this.router.navigate(['/nostore']);
+      return;
+    }
     this.product.storeId.next(localStorage.getItem('store'));
     this.fetch();
     this.product.getUser().subscribe(user => {
@@ -37,8 +49,13 @@ export class OffersComponent implements OnInit {
   }
 
   add() {
+    const offer = {
+      data: {
+        type: 'Information'
+      }
+    }
     this.bottomSheet.open(AddOfferComponent, {
-      data: { action: 'add', offer: null },
+      data: { action: 'add', offer: offer },
       panelClass: 'custom-width',
     }).afterDismissed().subscribe(res => {
       if (res) {

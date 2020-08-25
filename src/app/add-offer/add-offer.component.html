@@ -18,6 +18,52 @@
                     <input matInput placeholder="title" formControlName="title" required>
                 </mat-form-field>
             </div>
+            <div *ngIf="this.offerType=='Collection'" formGroupName="data">
+               
+                <div  class="col" *ngIf="this.data.action === 'add'">
+                    <mat-form-field>
+                        <mat-label>Select type</mat-label>
+                         <mat-select  [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
+                            <mat-option value="Information">
+                                Information
+                            </mat-option>
+                            <mat-option value="Collection">
+                                Collection
+                            </mat-option>
+                            
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div  class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>collection_id</mat-label>
+                        <input matInput placeholder="collection_id" formControlName="collection_id" required>
+                    </mat-form-field>
+                </div>
+                <div  class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>button_text</mat-label>
+                        <input matInput placeholder="button_text" formControlName="button_text" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="this.offerType=='Information'" formGroupName="data">
+                <div  class="col" *ngIf="this.data.action === 'add'">
+                    <mat-label>Select type</mat-label>
+                    <mat-form-field>
+                        <mat-select   [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
+                            <mat-option value="Information">
+                                Information
+                            </mat-option>
+                            <mat-option value="Collection">
+                                Collection
+                            </mat-option>
+                            
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -30,12 +76,6 @@
                 <mat-form-field>
                     <mat-label>Sub text</mat-label>
                     <input matInput placeholder="subText" formControlName="sub_text" required>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field>
-                    <mat-label>Type</mat-label>
-                    <input matInput placeholder="type" formControlName="type" required>
                 </mat-form-field>
             </div>
         </div>
