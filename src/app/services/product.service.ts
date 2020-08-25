@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpParams} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +13,16 @@ export class ProductService {
   public products = new BehaviorSubject<any[]>([]);
   public productsLength = new BehaviorSubject<number>(0);
   public storeId = new BehaviorSubject<string>('');
-  constructor(private http: HttpClient) { }
-   httpOptions = {
+
+  constructor(private http: HttpClient) {
+  }
+
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
+
   getProducts(page: string, size: string, query: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/product', {
       params: new HttpParams()
@@ -26,15 +31,18 @@ export class ProductService {
         .set('q', query)
     });
   }
+
   getVarient(varientId: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/product-variant/' + varientId);
   }
+
   removeFromStore(id: number) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/product/remove', {
       params: new HttpParams()
         .set('id', id.toString())
     });
   }
+
   getCollections(page: string, size: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/app/collection', {
       params: new HttpParams()
@@ -42,21 +50,27 @@ export class ProductService {
         .set('size', size)
     });
   }
+
   getCollectionsList() {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/app/collection-list');
   }
+
   createCollection(data: string) {
     return this.http.post(`https://dapi.shunyafoundation.com/cart67-product/api/collection`, data, this.httpOptions);
   }
+
   updateCollections(collectionId: number, data: string) {
     return this.http.put(`https://dapi.shunyafoundation.com/cart67-product/api/collection/${collectionId}`, data, this.httpOptions);
   }
+
   deleteCollection(collectionId: number) {
     return this.http.delete(`https://dapi.shunyafoundation.com/cart67-product/api/collection/${collectionId}`);
   }
+
   addProductToSore(data: string) {
     return this.http.post(`https://dapi.shunyafoundation.com/cart67-product/api/product-store`, data, this.httpOptions);
   }
+
   getMasterProducts(page: string, size: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/master-product', {
       params: new HttpParams()
@@ -64,21 +78,27 @@ export class ProductService {
         .set('size', size)
     });
   }
+
   getDashboardItems() {
     return this.http.get('https://dapi.carvia.tech/cart67-product/api/dashboard-item-new');
   }
+
   deleteDashboardItem(id: string) {
     return this.http.delete(`https://dapi.carvia.tech/cart67-product/api/dashboard-item-new/${id}`);
   }
+
   updateDashboardItem(id: string, payload: string) {
     return this.http.put(`https://dapi.carvia.tech/cart67-product/api/dashboard-item-new/${id}`, payload, this.httpOptions);
   }
+
   createDashboardItem(payload: string) {
     return this.http.post('https://dapi.carvia.tech/cart67-product/api/dashboard-item-new', payload, this.httpOptions);
   }
+
   updateProduct(varientId: string, payload: string) {
     return this.http.put('https://dapi.shunyafoundation.com/cart67-product/api/product-variant/' + varientId, payload, this.httpOptions);
   }
+
   getOffers(page: string, size: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-notification/api/offer', {
       params: new HttpParams()
@@ -86,24 +106,31 @@ export class ProductService {
         .set('size', size)
     });
   }
+
   getOffer(id: number) {
     return this.http.get(`https://dapi.shunyafoundation.com/cart67-notification/api/offer/${id}`);
   }
+
   createOffer(payload: string) {
     return this.http.post('https://dapi.shunyafoundation.com/cart67-notification/api/offer', payload, this.httpOptions);
   }
+
   deleteOffer(id: number) {
     return this.http.delete(`https://dapi.shunyafoundation.com/cart67-notification/api/offer/${id}`);
   }
+
   updateOffer(id: number, data: string) {
     return this.http.put(`https://dapi.shunyafoundation.com/cart67-notification/api/offer/${id}`, data, this.httpOptions);
   }
+
   updateProfile(data: string) {
     return this.http.post('https://dapi.shunyafoundation.com/cart67-auth/api/account/profile', data, this.httpOptions);
   }
+
   getUser() {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-auth/api/account/me');
   }
+
   getStores() {
     return this.http.get('https://dapi.carvia.tech/cart67-product/api/store');
   }

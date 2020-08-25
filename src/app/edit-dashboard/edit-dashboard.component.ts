@@ -123,7 +123,7 @@ export class EditDashboardComponent implements OnInit {
     }
     this.spinner.show();
     if (this.data.action === 'update') {
-      this.product.updateCollections(this.data.dashboard.id, JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
+      this.product.updateDashboardItem(this.data.dashboard.id, JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
       }, error => {
@@ -131,7 +131,7 @@ export class EditDashboardComponent implements OnInit {
         console.log('error occurred while getting data from server   : ' + error.status);
       });
     } else {
-      this.product.createCollection(JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
+      this.product.createDashboardItem(JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
       }, error => {
