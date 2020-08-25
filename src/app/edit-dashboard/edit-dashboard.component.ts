@@ -12,9 +12,9 @@ import { ProductService } from '../services/product.service';
 export class EditDashboardComponent implements OnInit {
   addDashBoardItem: FormGroup;
   itemForm: FormGroup;
-  type = 'Collection';
+  type: string='';
   collections: any[] = [];
-  selectedCollection: any=null;
+  selectedCollection = -1;
   constructor(
     private bottomSheet: MatBottomSheet,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -23,16 +23,19 @@ export class EditDashboardComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.product.getCollectionsList().subscribe((res: any[]) => {
+      this.spinner.hide();
       this.collections = res;
       if (this.type == 'Collection' && this.data.action === 'update') {
         this.collections.forEach(collection => {
           if (collection.id === this.data.dashboard.item.id) {
-            this.selectedCollection = collection;
+            this.selectedCollection = collection.id;
           }
         });
       }
     }, error => {
+      this.spinner.hide();
       console.log('error occurred while getting data from server   : ' + error.status);
     });
     this.type = this.data.dashboard.item.type;
@@ -115,26 +118,25 @@ export class EditDashboardComponent implements OnInit {
     }
   }
   create() {
-    this.spinner.show();
     if (this.type == 'Collection') {
-      console.log(this.selectedCollection.id);
-      this.itemForm.get('id').setValue(this.selectedCollection.id);
-      console.log(this.itemForm.value);
+      this.itemForm.get('id').setValue(this.selectedCollection);
     }
-
+    this.spinner.show();
     if (this.data.action === 'update') {
-      console.log(JSON.stringify(this.addDashBoardItem.value));
       this.product.updateCollections(this.data.dashboard.id, JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
-        console.log('updated successfully');
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
+      }, error => {
+        this.spinner.hide();
+        console.log('error occurred while getting data from server   : ' + error.status);
       });
     } else {
-      console.log(JSON.stringify(this.addDashBoardItem.value));
       this.product.createCollection(JSON.stringify(this.addDashBoardItem.value)).subscribe(res => {
-        console.log('Added successfully');
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
+      }, error => {
+        this.spinner.hide();
+        console.log('error occurred while getting data from server   : ' + error.status);
       });
     }
   }

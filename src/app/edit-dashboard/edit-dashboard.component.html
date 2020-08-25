@@ -12,17 +12,17 @@
                 <div class="col" *ngIf="this.data.action === 'add'">
                     <mat-form-field>
                         <mat-label>Select type</mat-label>
-                        <mat-select [(value)]="type" formControlName="type" (selectionChange)="typeChange()">
-                            <mat-option value="Collection">
+                        <mat-select [(value)]="type"  (selectionChange)="typeChange()">
+                            <mat-option [value]="'Collection'">
                                 Collection
                             </mat-option>
-                            <mat-option value="Category">
+                            <mat-option [value]="'Category'">
                                 Category
                             </mat-option>
-                            <mat-option value="HealthBoard">
+                            <mat-option [value]="'HealthBoard'">
                                 HealthBoard
                             </mat-option>
-                            <mat-option value="Offers">
+                            <mat-option [value]="'Offers'">
                                 Offers
                             </mat-option>
                         </mat-select>
@@ -55,7 +55,7 @@
                     <mat-form-field>
                         <mat-label>Choose collection</mat-label>
                         <mat-select [(value)]="selectedCollection">
-                            <mat-option *ngFor="let collection of collections" value={{collection}}>
+                            <mat-option *ngFor="let collection of collections" [value]="collection.id">
                                 {{collection.name}}
                             </mat-option>
                         </mat-select>
@@ -69,17 +69,17 @@
                     <div class="col-md-4" *ngIf="this.data.action === 'add'">
                         <mat-form-field>
                             <mat-label>Select type</mat-label>
-                            <mat-select [(value)]="type" formControlName="type" (selectionChange)="typeChange()">
-                                <mat-option value="Collection">
+                            <mat-select [(value)]="type"  (selectionChange)="typeChange()">
+                                <mat-option [value]="'Collection'">
                                     Collection
                                 </mat-option>
-                                <mat-option value="Category">
+                                <mat-option [value]="'Category'">
                                     Category
                                 </mat-option>
-                                <mat-option value="HealthBoard">
+                                <mat-option [value]="'HealthBoard'">
                                     HealthBoard
                                 </mat-option>
-                                <mat-option value="Offers">
+                                <mat-option [value]="'Offers'">
                                     Offers
                                 </mat-option>
                             </mat-select>
