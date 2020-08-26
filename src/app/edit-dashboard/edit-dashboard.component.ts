@@ -15,7 +15,7 @@ export class EditDashboardComponent implements OnInit {
   itemForm: FormGroup;
   type: string='';
   collections: any[] = [];
-  selectedCollection = -1;
+  selectedCollection :any;
   reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
   constructor(
     private snackBar: MatSnackBar,
@@ -26,28 +26,14 @@ export class EditDashboardComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.product.getCollectionsList().subscribe((res: any[]) => {
-      this.spinner.hide();
-      this.collections = res;
-      if (this.type == 'Collection' && this.data.action === 'update') {
-        this.collections.forEach(collection => {
-          if (collection.id === this.data.dashboard.item.id) {
-            this.selectedCollection = collection.id;
-          }
-        });
-      }
-    }, error => {
-      this.spinner.hide();
-      console.log('error occurred while getting data from server   : ' + error.status);
-    });
     this.type = this.data.dashboard.item.type;
+    
     if (this.data.action === 'update') {
       if (this.type == 'Collection') {
         this.itemForm = this.formBuilder.group({
           type: [this.data.dashboard.item.type, Validators.required],
           title: [this.data.dashboard.item.title, Validators.required],
-          img_url: [this.data.dashboard.item.img_url, [Validators.required,Validators.pattern(this.reg)]],
+          img_url: ['', [Validators.required,Validators.pattern(this.reg)]],
           id: [this.data.dashboard.item.id, Validators.required],
           expanded: [this.data.dashboard.item.expanded, Validators.required]
         });
@@ -56,16 +42,15 @@ export class EditDashboardComponent implements OnInit {
           active: [this.data.dashboard.active, Validators.required],
           item: this.itemForm
         });
-
-
       } else {
+        this.itemForm = this.formBuilder.group({
+          type: [this.data.dashboard.item.type, Validators.required],
+          title: [this.data.dashboard.item.title, Validators.required]
+        });
         this.addDashBoardItem = this.formBuilder.group({
           sequence: [this.data.dashboard.sequence, Validators.required],
           active: [this.data.dashboard.active, Validators.required],
-          item: this.formBuilder.group({
-            type: [this.data.dashboard.item.type, Validators.required],
-            title: [this.data.dashboard.item.title, Validators.required]
-          })
+          item: this.itemForm
         });
       }
     } else {
@@ -74,25 +59,48 @@ export class EditDashboardComponent implements OnInit {
           type: ['', Validators.required],
           title: ['', Validators.required],
           img_url: ['', [Validators.required,Validators.pattern(this.reg)]],
-          id: ['', Validators.required],
-          expanded: ['', Validators.required]
+          id: [0, Validators.required],
+          expanded: [true, Validators.required]
         });
         this.addDashBoardItem = this.formBuilder.group({
           sequence: ['', Validators.required],
-          active: ['', Validators.required],
+          active: [true, Validators.required],
           item: this.itemForm
         });
       } else {
+        this.itemForm = this.formBuilder.group({
+          type: ['', Validators.required],
+          title: ['', Validators.required]
+        });
+
         this.addDashBoardItem = this.formBuilder.group({
           sequence: ['', Validators.required],
-          active: ['', Validators.required],
-          item: this.formBuilder.group({
-            type: ['', Validators.required],
-            title: ['', Validators.required]
-          })
+          active: [true, Validators.required],
+          item: this.itemForm
         });
       }
     }
+    this.spinner.show();
+    this.product.getCollectionsList().subscribe((res: any[]) => {
+      this.spinner.hide();
+      this.collections = res;
+      if (this.type == 'Collection' && this.data.action === 'update') {
+        this.collections.forEach(collection => {
+          if (collection.id === this.data.dashboard.item.id) {
+            this.selectedCollection = collection;
+            this.itemForm.get('img_url').setValue(this.selectedCollection.image_url);
+          }
+        });
+      }
+    }, error => {
+      this.spinner.hide();
+      console.log('error occurred while getting data from server   : ' + error.status);
+    });
+
+
+  }
+  collectionChange(){
+    this.itemForm.get('img_url').setValue(this.selectedCollection.image_url);
   }
 
   typeChange() {
@@ -101,8 +109,8 @@ export class EditDashboardComponent implements OnInit {
         type: ['', Validators.required],
         title: ['', Validators.required],
         img_url: ['', [Validators.required,Validators.pattern(this.reg)]],
-        id: ['', Validators.required],
-        expanded: ['', Validators.required]
+        id: [0, Validators.required],
+        expanded: [true, Validators.required]
       });
       this.addDashBoardItem = this.formBuilder.group({
         sequence: ['', Validators.required],
@@ -110,24 +118,24 @@ export class EditDashboardComponent implements OnInit {
         item: this.itemForm
       });
     } else {
+      this.itemForm = this.formBuilder.group({
+        type: [this.type, Validators.required],
+        title: ['', Validators.required]
+      });
+
       this.addDashBoardItem = this.formBuilder.group({
         sequence: ['', Validators.required],
-        active: ['', Validators.required],
-        item: this.formBuilder.group({
-          type: ['', Validators.required],
-          title: ['', Validators.required]
-        })
+        active: [true, Validators.required],
+        item: this.itemForm
       });
     }
   }
   create() {
-
-
-    if (this.type == 'Collection') {
-      this.itemForm.get('id').setValue(this.selectedCollection);
+    if (this.type === 'Collection') {
+      this.itemForm.get('id').setValue(this.selectedCollection.id);
+      this.itemForm.get('type').setValue(this.type);
     }
-    this.itemForm.get('type').setValue(this.type);
-
+   
     if(this.addDashBoardItem.invalid || this.itemForm.invalid){
       this.snackBar.openFromComponent(PopupmessageComponent, {
         duration: 2 * 1000,

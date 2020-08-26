@@ -24,8 +24,8 @@
                 <ng-container matColumnDef="picture">
                     <mat-header-cell *matHeaderCellDef> Picture </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <img *ngIf="element.image_url" width="20%" src={{element.image_url}} class="" alt="Image unavailable">
-                        <img *ngIf="!element.image_url" width="20%" src="https://s3.shunyafoundation.com/s3/62fb0092aaed7a3bbdc452e9cda3d9ed0a8bb7e0/no-image.png" class="" alt="Image unavailable">
+                        <img *ngIf="element.picture" width="20%" src={{element.picture}} class="" alt="Image unavailable">
+                         <img *ngIf="!element.picture" width="20%" src="https://s3.shunyafoundation.com/s3/62fb0092aaed7a3bbdc452e9cda3d9ed0a8bb7e0/no-image.png" class="" alt="Image unavailable"> 
                     </mat-cell>
                 </ng-container>
         

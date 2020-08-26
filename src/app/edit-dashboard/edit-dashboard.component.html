@@ -4,9 +4,7 @@
 </div>
 <div class="card-body">
     <form [formGroup]="addDashBoardItem" (ngSubmit)="create()">
-
         <div class="row">
-
             <div *ngIf="this.type=='Collection' else otherType" formGroupName="item">
 
                 <div class="col" *ngIf="this.data.action === 'add'">
@@ -39,7 +37,7 @@
                 <div class="col">
                     <mat-form-field>
                         <mat-label>img_url</mat-label>
-                        <input matInput placeholder="img_url" formControlName="img_url" required>
+                        <input matInput  placeholder="img_url" formControlName="img_url" required>
                     </mat-form-field>
                     <div class="alert alert-danger"
                         *ngIf="itemForm.controls['img_url'].value && itemForm.controls['img_url'].invalid">
@@ -52,8 +50,8 @@
                 <div class="col">
                     <mat-form-field>
                         <mat-label>Choose collection</mat-label>
-                        <mat-select [(value)]="selectedCollection">
-                            <mat-option *ngFor="let collection of collections" [value]="collection.id">
+                        <mat-select [(value)]="selectedCollection" (selectionChange)="collectionChange()">
+                            <mat-option *ngFor="let collection of collections" [value]="collection">
                                 {{collection.name}}
                             </mat-option>
                         </mat-select>
@@ -91,8 +89,6 @@
                     </div>
                 </div>
             </ng-template>
-
-
         </div>
         <div class="row">
             <div class="col">
