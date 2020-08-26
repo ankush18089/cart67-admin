@@ -81,7 +81,6 @@ export class DashboardComponent implements OnInit {
     });
   }
   add() {
-
     const offer = {
       item: {
         type: 'Collection'
@@ -113,4 +112,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  fetch1() {
+    this.snackBar.openFromComponent(PopupmessageComponent, {
+      duration: 2 * 1000,
+      data: { data: 'Please use edit option to update this' }
+    });
+    this.fetch();
+  }
 }

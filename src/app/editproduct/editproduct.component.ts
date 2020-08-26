@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-editproduct',
   templateUrl: './editproduct.component.html',
@@ -12,6 +13,7 @@ export class EditproductComponent implements OnInit {
   varient: any;
   mrp:number;
   constructor(
+    private spinner: NgxSpinnerService,
     private product: ProductService,
     private bottomSheetRef: MatBottomSheet,
     private formBuilder: FormBuilder,
@@ -49,12 +51,16 @@ export class EditproductComponent implements OnInit {
     return true;
   }
   save() {
+    this.spinner.show();
     this.product.updateProduct(this.data.varient.id, JSON.stringify(this.varientForm.value)).subscribe(res => {
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      console.log('error occurred while getting data from server   : ' + error.status);
     });
     this.bottomSheetRef.dismiss(true);
   }
   close() {
     this.bottomSheetRef.dismiss(false);
   }
-
 }

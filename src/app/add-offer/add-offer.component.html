@@ -1,6 +1,6 @@
 <div class="card-header">
-   <label *ngIf="this.data.action === 'update'">Update Offer</label> 
-   <label *ngIf="this.data.action === 'add'">Add Offer</label> 
+    <label *ngIf="this.data.action === 'update'">Update Offer</label>
+    <label *ngIf="this.data.action === 'add'">Add Offer</label>
 </div>
 <div class="card-body">
     <form [formGroup]="addOffer" (ngSubmit)="create()">
@@ -19,28 +19,26 @@
                 </mat-form-field>
             </div>
             <div *ngIf="this.offerType=='Collection'" formGroupName="data">
-               
-                <div  class="col" *ngIf="this.data.action === 'add'">
+
+                <div class="col" *ngIf="this.data.action === 'add'">
                     <mat-form-field>
-                        <mat-label>Select type</mat-label>
-                         <mat-select  [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
-                            <mat-option value="Information">
+                        <mat-select [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
+                            <mat-option [value]="'Information'">
                                 Information
                             </mat-option>
-                            <mat-option value="Collection">
+                            <mat-option [value]="'Collection'">
                                 Collection
                             </mat-option>
-                            
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div  class="col-md-4">
+                <div class="col-md-4">
                     <mat-form-field>
                         <mat-label>collection_id</mat-label>
                         <input matInput placeholder="collection_id" formControlName="collection_id" required>
                     </mat-form-field>
                 </div>
-                <div  class="col-md-4">
+                <div class="col-md-4">
                     <mat-form-field>
                         <mat-label>button_text</mat-label>
                         <input matInput placeholder="button_text" formControlName="button_text" required>
@@ -48,22 +46,20 @@
                 </div>
             </div>
             <div *ngIf="this.offerType=='Information'" formGroupName="data">
-                <div  class="col" *ngIf="this.data.action === 'add'">
-                    <mat-label>Select type</mat-label>
+                <div class="col" *ngIf="this.data.action === 'add'">
                     <mat-form-field>
-                        <mat-select   [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
-                            <mat-option value="Information">
+                        <mat-select [(value)]="offerType" formControlName="type" (selectionChange)="typeChange()">
+                            <mat-option [value]="'Information'">
                                 Information
                             </mat-option>
-                            <mat-option value="Collection">
+                            <mat-option [value]="'Collection'">
                                 Collection
                             </mat-option>
-                            
                         </mat-select>
                     </mat-form-field>
                 </div>
             </div>
-            
+
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -71,6 +67,10 @@
                     <mat-label>Picture</mat-label>
                     <input matInput placeholder="picture" formControlName="picture" required>
                 </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="addOffer.controls['picture'].value && addOffer.controls['picture'].invalid">
+                    not a valid URL
+                </div>
             </div>
             <div class="col-md-4">
                 <mat-form-field>

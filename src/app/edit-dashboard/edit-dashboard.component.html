@@ -12,7 +12,7 @@
                 <div class="col" *ngIf="this.data.action === 'add'">
                     <mat-form-field>
                         <mat-label>Select type</mat-label>
-                        <mat-select [(value)]="type"  (selectionChange)="typeChange()">
+                        <mat-select [(value)]="type" (selectionChange)="typeChange()">
                             <mat-option [value]="'Collection'">
                                 Collection
                             </mat-option>
@@ -35,21 +35,19 @@
                         <input matInput placeholder="title" formControlName="title" required>
                     </mat-form-field>
                 </div>
-                <div *ngIf="this.data.action === 'add'" class="col">
-                    <mat-form-field>
-                        <mat-label>type</mat-label>
-                        <input matInput placeholder="type" formControlName="type" required>
-                    </mat-form-field>
-                </div>
 
                 <div class="col">
                     <mat-form-field>
                         <mat-label>img_url</mat-label>
                         <input matInput placeholder="img_url" formControlName="img_url" required>
                     </mat-form-field>
+                    <div class="alert alert-danger"
+                        *ngIf="itemForm.controls['img_url'].value && itemForm.controls['img_url'].invalid">
+                        not a valid URL
+                    </div>
                 </div>
                 <div class="col">
-                    <mat-slide-toggle formControlName="expanded" >expanded</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="expanded">expanded</mat-slide-toggle>
                 </div>
                 <div class="col">
                     <mat-form-field>
@@ -69,7 +67,7 @@
                     <div class="col-md-4" *ngIf="this.data.action === 'add'">
                         <mat-form-field>
                             <mat-label>Select type</mat-label>
-                            <mat-select [(value)]="type"  (selectionChange)="typeChange()">
+                            <mat-select [(value)]="type" (selectionChange)="typeChange()">
                                 <mat-option [value]="'Collection'">
                                     Collection
                                 </mat-option>
@@ -83,12 +81,6 @@
                                     Offers
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div *ngIf="this.data.action === 'add'" class="col-md-4">
-                        <mat-form-field>
-                            <mat-label>type</mat-label>
-                            <input matInput placeholder="type" formControlName="type" required>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -105,12 +97,12 @@
         <div class="row">
             <div class="col">
                 <mat-form-field>
-                    <mat-label>sequence</mat-label>
-                    <input matInput placeholder="sequence" formControlName="sequence" required>
+                    <mat-label>Sequence</mat-label>
+                    <input matInput type="number" placeholder="sequence" formControlName="sequence" required>
                 </mat-form-field>
             </div>
             <div class="col">
-                <mat-slide-toggle formControlName="active" >active</mat-slide-toggle>
+                <mat-slide-toggle formControlName="active">active</mat-slide-toggle>
             </div>
         </div>
         <div class="row mt-2 d-flex justify-content-center">

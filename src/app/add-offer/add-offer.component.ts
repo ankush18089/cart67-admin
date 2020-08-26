@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DatePipe } from '@angular/common';
 import { ProductService } from '../services/product.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupmessageComponent } from '../popupmessage/popupmessage.component';
 @Component({
   selector: 'app-add-offer',
   templateUrl: './add-offer.component.html',
@@ -12,7 +14,9 @@ import { ProductService } from '../services/product.service';
 export class AddOfferComponent implements OnInit {
   addOffer: FormGroup;
   offerType: string = 'Information';
+  reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
   constructor(
+    private snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private bottomSheet: MatBottomSheet,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -27,7 +31,7 @@ export class AddOfferComponent implements OnInit {
         this.addOffer = this.formBuilder.group({
           name: [this.data.offer.name, Validators.required],
           title: [this.data.offer.title, Validators.required],
-          picture: [this.data.offer.picture, Validators.required],
+          picture: [this.data.offer.picture, [Validators.required,Validators.pattern(this.reg)]],
           sub_text: [this.data.offer.sub_text, Validators.required],
           data: this.formBuilder.group({
             type: [this.data.offer.data.type, Validators.required]
@@ -39,7 +43,7 @@ export class AddOfferComponent implements OnInit {
         this.addOffer = this.formBuilder.group({
           name: [this.data.offer.name, Validators.required],
           title: [this.data.offer.title, Validators.required],
-          picture: [this.data.offer.picture, Validators.required],
+          picture: [this.data.offer.picture, [Validators.required,Validators.pattern(this.reg)]],
           sub_text: [this.data.offer.sub_text, Validators.required],
           data: this.formBuilder.group({
             type: [this.data.offer.data.type, Validators.required],
@@ -56,7 +60,7 @@ export class AddOfferComponent implements OnInit {
         this.addOffer = this.formBuilder.group({
           name: ['', Validators.required],
           title: ['', Validators.required],
-          picture: ['', Validators.required],
+          picture: ['', [Validators.required,Validators.pattern(this.reg)]],
           sub_text: ['', Validators.required],
           data: this.formBuilder.group({
             type: [this.offerType, Validators.required],
@@ -69,7 +73,7 @@ export class AddOfferComponent implements OnInit {
         this.addOffer = this.formBuilder.group({
           name: ['', Validators.required],
           title: ['', Validators.required],
-          picture: ['', Validators.required],
+          picture: ['', [Validators.required,Validators.pattern(this.reg)]],
           sub_text: ['', Validators.required],
           data: this.formBuilder.group({
             type: [this.offerType, Validators.required]
@@ -84,7 +88,7 @@ export class AddOfferComponent implements OnInit {
       this.addOffer = this.formBuilder.group({
         name: ['', Validators.required],
         title: ['', Validators.required],
-        picture: ['', Validators.required],
+        picture: ['', [Validators.required,Validators.pattern(this.reg)]],
         sub_text: ['', Validators.required],
         data: this.formBuilder.group({
           type: [this.offerType, Validators.required],
@@ -97,7 +101,7 @@ export class AddOfferComponent implements OnInit {
       this.addOffer = this.formBuilder.group({
         name: ['', Validators.required],
         title: ['', Validators.required],
-        picture: ['', Validators.required],
+        picture: ['', [Validators.required,Validators.pattern(this.reg)]],
         sub_text: ['', Validators.required],
         data: this.formBuilder.group({
           type: [this.offerType, Validators.required]
@@ -107,6 +111,13 @@ export class AddOfferComponent implements OnInit {
 
   }
   create() {
+    if(this.addOffer.invalid){
+      this.snackBar.openFromComponent(PopupmessageComponent, {
+        duration: 2 * 1000,
+        data: { data: 'Invalid values ,please try again !!' }
+      });
+      return;
+    }
     this.spinner.show();
     if (this.data.action === 'update') {
       console.log(JSON.stringify(this.addOffer.value));
@@ -114,6 +125,9 @@ export class AddOfferComponent implements OnInit {
         console.log('updated successfully');
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
+      }, error => {
+        this.spinner.hide();
+        console.log('error occurred while getting data from server   : ' + error.status);
       });
     } else {
       console.log(JSON.stringify(this.addOffer.value));
@@ -121,6 +135,9 @@ export class AddOfferComponent implements OnInit {
         console.log('Added successfully');
         this.spinner.hide();
         this.bottomSheet.dismiss(true);
+      }, error => {
+        this.spinner.hide();
+        console.log('error occurred while getting data from server   : ' + error.status);
       });
     }
   }

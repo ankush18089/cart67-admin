@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DatePipe } from '@angular/common';
 import { ProductService } from '../services/product.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupmessageComponent } from '../popupmessage/popupmessage.component';
 @Component({
   selector: 'app-editprofile',
   templateUrl: './editprofile.component.html',
@@ -13,6 +15,7 @@ import { ProductService } from '../services/product.service';
 export class EditprofileComponent implements OnInit {
   profile: FormGroup;
   constructor(
+    private snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private bottomSheet: MatBottomSheet,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -32,10 +35,10 @@ export class EditprofileComponent implements OnInit {
   }
   save() {
     if (this.profile.invalid) {
-      // this.snackBar.openFromComponent(PizzaPartyComponent, {
-      //   duration: 2 * 1000,
-      //   data: { data: 'Invalid form' }
-      // });
+      this.snackBar.openFromComponent(PopupmessageComponent, {
+        duration: 2 * 1000,
+        data: { data: 'Invalid' }
+      });
       return;
     }
     this.spinner.show();

@@ -41,5 +41,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<mat-paginator  [pageSizeOptions]="[3,5,8]" (page)="fetch()">
+<mat-paginator [length]="length"  [pageSizeOptions]="[6,10,12]" (page)="fetch1()">
 </mat-paginator>

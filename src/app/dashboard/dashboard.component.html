@@ -9,7 +9,7 @@
                 <ng-container matColumnDef="active">
                     <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                       <mat-slide-toggle (click)="fetch()" [(ngModel)]="element.active"></mat-slide-toggle>
+                       <mat-slide-toggle (click)="fetch1()" [(ngModel)]="element.active"></mat-slide-toggle>
                     </mat-cell>
                 </ng-container>
 
@@ -28,11 +28,11 @@
                 <ng-container matColumnDef="action">
                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <button  mat-icon-button color="primary"
+                        <button  matTooltip="Edit this item"  mat-icon-button color="primary"
                             (click)="edit(element)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn" (click)="delete(element.id)">
+                        <button matTooltip="Delete this item" mat-icon-button color="warn" (click)="delete(element.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-cell>

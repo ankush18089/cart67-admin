@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
       this.product.isLoggedIn.next(true);
       this.product.user.next(user['name']);
     });
-    this.product.getProducts('0', '10', '').subscribe(res => {
+    this.product.getProducts('0', '5', '').subscribe(res => {
       this.spinner.hide();
       this.result = res['content'];
       this.product.products.next(res['content']);

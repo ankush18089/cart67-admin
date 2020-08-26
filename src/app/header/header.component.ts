@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
 
     } else {
       this.product.storeId.next(localStorage.getItem('store'));
-      this.product.getProducts('0', '10', '').subscribe(res => {
+      this.product.getProducts('0', '5', '').subscribe(res => {
         this.product.products.next(res['content']);
         this.product.productsLength.next(res['totalElements']);
       });
