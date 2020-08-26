@@ -1,48 +1,63 @@
 <div class="card-header">
-    <label *ngIf="this.data.action === 'update'">Update collection</label> 
-    <label *ngIf="this.data.action === 'add'">Add collection</label> 
- </div>
- <div class="card-body">
-     <form [formGroup]="collectionForm" (ngSubmit)="create()">
- 
-         <div class="row mt-3">
-             <div class="col-md-4">
-                 <mat-form-field>
-                     <mat-label>Name</mat-label>
-                     <input matInput placeholder="Name" formControlName="name" required>
-                 </mat-form-field>
-             </div>
-             <div class="col-md-4">
-                 <mat-form-field>
-                     <mat-label>Image</mat-label>
-                     <input matInput placeholder="image_url" formControlName="image_url" required>
-                 </mat-form-field>
-             </div>
-             <div class="col-md-4">
+    <label *ngIf="this.data.action === 'update'">Update collection</label>
+    <label *ngIf="this.data.action === 'add'">Add collection</label>
+</div>
+<div class="card-body">
+    <form [formGroup]="collectionForm" (ngSubmit)="create()">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
                 <mat-form-field>
-                    <mat-label>sequence</mat-label>
-                    <input matInput placeholder="sequence" formControlName="sequence" required>
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name" required>
                 </mat-form-field>
             </div>
-         </div>
-         <div class="row">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Image</mat-label>
+                    <input matInput placeholder="image_url" formControlName="image_url" required>
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="collectionForm.controls['image_url'].value && collectionForm.controls['image_url'].invalid">
+                    not a valid URL
+                </div>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>sequence</mat-label>
+                    <input type="number" matInput placeholder="sequence" formControlName="sequence" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
             </div>
-    
+
             <div class="col">
                 <mat-slide-toggle formControlName="featured">featured</mat-slide-toggle>
             </div>
-    
+
             <div class="col">
                 <mat-slide-toggle formControlName="show_on_search">Show on serach</mat-slide-toggle>
             </div>
-         </div>
-         <div class="row mt-2 d-flex justify-content-center">
-             <button type="submit" mat-raised-button color="accent">Save</button>
-         </div>
- 
-     </form>
- </div>
- <ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
- </ngx-spinner>
+
+            <div class="col">
+                <mat-form-field>
+                    <mat-label>Choose tag</mat-label>
+                    <mat-select [(value)]="selectedTagId" (selectionChange)="tagChange()">
+                        <mat-option *ngFor="let tag of tags" [value]="tag.id">
+                            {{tag.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <button type="submit" mat-raised-button color="accent">Save</button>
+        </div>
+
+    </form>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
+</ngx-spinner>

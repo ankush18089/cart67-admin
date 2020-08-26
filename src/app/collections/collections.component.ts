@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class CollectionsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'picture', 'action'];
+  displayedColumns: string[] = ['name', 'picture','active','sequence','tag', 'action'];
   result: any[]=[];
   length: number;
   constructor(
@@ -68,6 +68,14 @@ export class CollectionsComponent implements OnInit {
     });
   }
 
+  fetch1() {
+    this.snackBar.openFromComponent(PopupmessageComponent, {
+      duration: 2 * 1000,
+      data: { data: 'Please use edit option to update this' }
+    });
+    this.fetch();
+  }
+
   edit(data: any): void {
     this.bottomSheet.open(EditCollectionComponent, {
       data: { action: 'update', collection: data },
@@ -83,12 +91,14 @@ export class CollectionsComponent implements OnInit {
     });
   }
   delete(id: number) {
-    this.product.removeFromStore(id).subscribe(res => {
-      this.fetch();
-      this.snackBar.openFromComponent(PopupmessageComponent, {
-        duration: 2 * 1000,
-        data: { data: 'removed  successfully' }
-      });
+    this.product.deleteCollection(id).subscribe(res => {
+      if(res){
+        this.fetch();
+        this.snackBar.openFromComponent(PopupmessageComponent, {
+          duration: 2 * 1000,
+          data: { data: 'removed  successfully' }
+        });
+      }  
     }, error => {
       console.log('error occurred while getting data from server   : ' + error.status);
     });

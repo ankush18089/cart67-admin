@@ -1,4 +1,26 @@
-<mat-table [dataSource]="products" class="mat-elevation-z8">
+<form [formGroup]="myForm" class="example-form" (submit)="find()">
+    <div class="row" style="background-color: white;">
+       
+        <div class="col-md-2">
+            <mat-form-field style="width: 100%;">
+                <mat-label>Search product</mat-label>
+                <input matInput type="text" placeholder="Ex. Patabji" formControlName="query">
+            </mat-form-field>
+            <button mat-button *ngIf="this.myForm.controls['query'].value!=''" matSuffix mat-icon-button
+                aria-label="Clear" (click)="fetch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="col-md-1"><button #search mat-button type="submit">
+                <span class="material-icons">
+                    search
+                </span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<mat-table [dataSource]="products">
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
@@ -36,7 +58,7 @@
 </mat-table>
 
 
-<mat-paginator  [pageSizeOptions]="[5,10, 20]" (page)="fetch()">
+<mat-paginator [pageSizeOptions]="[5,10, 20]" (page)="fetch()">
 </mat-paginator>
 <ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
 </ngx-spinner>

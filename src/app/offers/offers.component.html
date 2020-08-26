@@ -1,6 +1,12 @@
-<button mat-raised-button (click)="add()">Add new</button>
+<div class="row" style="background-color: white;">
+    <button mat-button (click)="add()">
+        <span class="material-icons">
+            post_add
+        </span>
+    </button>
+</div>
 
-<mat-table [dataSource]="offers" class="mat-elevation-z8">
+<mat-table [dataSource]="offers">
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>

@@ -1,10 +1,10 @@
 
         <div  *ngIf="this.result.length>0;else noproduct">
             <form [formGroup]="myForm" class="example-form" (submit)="find()">
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col">
-                        <mat-form-field class="example-form-field">
+                <div class="row" style="background-color: white;">
+                  
+                    <div class="col-md-2">
+                        <mat-form-field style="width: 100%;">
                             <mat-label>Search product</mat-label>
                             <input matInput type="text" placeholder="Ex. Patabji" formControlName="query">
                         </mat-form-field>
@@ -13,10 +13,14 @@
                             <mat-icon>close</mat-icon>
                         </button>
                     </div>
-                    <div class="col"><button #search mat-raised-button color="primary" type="submit">Search</button></div>
+                    <div class="col-md-1"><button #search mat-button  type="submit">
+                        <span class="material-icons">
+                            search
+                        </span>
+                    </button></div>
                 </div>
             </form>
-            <mat-table [dataSource]="result" class="mat-elevation-z8">
+            <mat-table [dataSource]="result">
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>

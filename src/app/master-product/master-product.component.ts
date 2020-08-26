@@ -16,9 +16,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class MasterProductComponent implements OnInit {
   products: any;
+  myForm = this.fb.group({ query: [''] });
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'picture', 'variants', 'action'];
   constructor(
+    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
      private snackBar: MatSnackBar,
      private product: ProductService) { }
@@ -68,6 +70,18 @@ export class MasterProductComponent implements OnInit {
         data: { data: 'Added  successfully'}
       });
     })
+  }
+
+  find() {
+    this.spinner.show();
+    this.product.searchMasterProducts('0', '5', this.myForm.get('query').value).subscribe(res => {
+      this.products = res['content'];
+      this.paginator.length = res['totalElements'];
+      this.spinner.hide();
+    }, error => {
+      console.log('error occurred while getting data from server   : ' + error.status);
+      this.spinner.hide();
+    });
   }
 
 }

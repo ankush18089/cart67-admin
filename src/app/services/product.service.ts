@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {HttpParams} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,13 @@ export class ProductService {
     });
   }
 
+  searchMasterProducts(page: string, size: string, query: string) {
+    return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/master-product/search', {
+      params: new HttpParams()
+        .set('query', query)
+    });
+  }
+
   getVarient(varientId: string) {
     return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/product-variant/' + varientId);
   }
@@ -44,11 +51,15 @@ export class ProductService {
   }
 
   getCollections(page: string, size: string) {
-    return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/app/collection', {
+    return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/collection', {
       params: new HttpParams()
         .set('page', page)
         .set('size', size)
     });
+  }
+
+  getTags() {
+    return this.http.get('https://dapi.shunyafoundation.com/cart67-product/api/tag');
   }
 
   getCollectionsList() {
