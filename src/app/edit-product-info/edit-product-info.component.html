@@ -1,0 +1,44 @@
+<form [formGroup]="productForm">
+    <div class="row">
+        <h2>{{this.data.product.name}}</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" required>
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
+        </div>
+        <div class="col">
+            <mat-slide-toggle formControlName="featured">featured</mat-slide-toggle>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="fill">
+                <mat-label>choose collection</mat-label>
+                <mat-select [formControlName]="'tags'" multiple>
+                  <mat-option *ngFor="let collection of collections" [value]="collection">{{collection.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-form-field appearance="fill">
+                <mat-label>choose category</mat-label>
+                <mat-select [formControlName]="'category'" [(value)]="selectedCategory">
+                  <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </div>
+   
+    <div class="row mt-2">
+        <button [disabled]="this.productForm.invalid" class="mr-2" mat-raised-button color="primary"
+            (click)="save()">Save</button>
+        <button mat-raised-button color="primary" (click)="close()">Close</button>
+    </div>
+</form>

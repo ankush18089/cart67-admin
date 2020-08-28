@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class EditproductComponent implements OnInit {
   varientForm: FormGroup;
   varient: any;
-  mrp:number;
+  mrp: number;
   constructor(
     private spinner: NgxSpinnerService,
     private product: ProductService,
@@ -23,7 +23,7 @@ export class EditproductComponent implements OnInit {
   ngOnInit(): void {
     this.varientForm = this.formBuilder.group({
       id: [102, Validators.required],
-      price: ['',Validators.required],
+      price: ['', Validators.required],
       mrp: ['', Validators.required],
       stock: ['', Validators.required],
       is_active: [''],
@@ -52,7 +52,7 @@ export class EditproductComponent implements OnInit {
   }
   save() {
     this.spinner.show();
-    this.product.updateProduct(this.data.varient.id, JSON.stringify(this.varientForm.value)).subscribe(res => {
+    this.product.updateProductVarient(this.data.varient.id, JSON.stringify(this.varientForm.value)).subscribe(res => {
       this.spinner.hide();
     }, error => {
       this.spinner.hide();

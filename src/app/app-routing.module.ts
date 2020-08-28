@@ -8,6 +8,7 @@ import { OffersComponent } from './offers/offers.component';
 import { MasterProductComponent } from './master-product/master-product.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CategoryComponent } from './category/category.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'collections', component: CollectionsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'category', component: CategoryComponent },
   { path: 'nostore', component: StoreMessageComponent },
   { path: 'offers', component: OffersComponent },
   { path: 'login', component: LoginComponent },

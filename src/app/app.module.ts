@@ -59,6 +59,9 @@ import { CollectionsComponent } from './collections/collections.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
+import { EditProductInfoComponent } from './edit-product-info/edit-product-info.component';
+import { CategoryComponent } from './category/category.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -77,7 +80,10 @@ import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.componen
     CollectionsComponent,
     EditCollectionComponent,
     DashboardComponent,
-    EditDashboardComponent
+    EditDashboardComponent,
+    EditProductInfoComponent,
+    CategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -130,8 +136,10 @@ import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.componen
     PopupmessageComponent,
     EditproductComponent,
     EditprofileComponent,
+    EditCategoryComponent,
     EditDashboardComponent,
     EditCollectionComponent,
+    EditProductInfoComponent,
     AddOfferComponent
   ],
   providers: [
