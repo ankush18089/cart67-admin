@@ -13,8 +13,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class EditCollectionComponent implements OnInit {
   collectionForm: FormGroup;
   reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-  tags: any[] = [];
-  selectedTagId = 0;
   constructor(
     private snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet,
@@ -26,51 +24,29 @@ export class EditCollectionComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.data.action === 'update') {
-      if (this.data.collection.tag) {
-        this.selectedTagId = this.data.collection.tag.id;
-      }
 
       this.collectionForm = this.formBuilder.group({
         name: [this.data.collection.name, Validators.required],
-        image_url: [this.data.collection.image_url, [Validators.required, Validators.pattern(this.reg)]],
+        image_url: [this.data.collection.image_url, [ Validators.pattern(this.reg)]],
         store_id: [this.data.collection.store_id, Validators.required],
         sequence: [this.data.collection.sequence, Validators.required],
         active: [this.data.collection.active, Validators.required],
         featured: [this.data.collection.featured, Validators.required],
-        tag_id: [this.selectedTagId, Validators.required],
-        tag: [''],
         show_on_search: [this.data.collection.show_on_search, Validators.required]
       });
     } else {
       this.collectionForm = this.formBuilder.group({
         name: ['', Validators.required],
-        image_url: ['', [Validators.required, Validators.pattern(this.reg)]],
+        image_url: ['', [Validators.pattern(this.reg)]],
         store_id: [localStorage.getItem('store'), Validators.required],
         sequence: [0, Validators.required],
         active: [true, Validators.required],
         featured: [true, Validators.required],
-        tag_id: [this.selectedTagId, Validators.required],
-        tag: [''],
         show_on_search: [true, Validators.required]
       });
     }
-
-    this.product.getTags().subscribe((res: any[]) => {
-      this.tags = res;
-    });
-  }
-  tagChange() {
-    this.collectionForm.get('tag_id').setValue(this.selectedTagId);
   }
   create() {
-
-    if (this.selectedTagId != 0) {
-      this.tags.forEach(tag => {
-        if (this.selectedTagId===tag.id) {
-          this.collectionForm.get('tag').setValue(tag);
-        }
-      });
-    }
     if(this.collectionForm.invalid){
       this.snackBar.openFromComponent(PopupmessageComponent, {
         duration: 2 * 1000,

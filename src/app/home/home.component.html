@@ -27,18 +27,28 @@
 
         <ng-container matColumnDef="category">
             <mat-header-cell *matHeaderCellDef>Category </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.category}} </mat-cell>
+            <mat-cell *matCellDef="let element">
+                <label *ngIf="element.category">{{element.category.name}}</label>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="tags">
             <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.tags}} </mat-cell>
+            <mat-cell *matCellDef="let element">
+                    <table *ngIf="element.tags.length>0">
+                        <tr *ngFor="let tag of element.tags">
+                            <td>
+                               {{tag.name}}
+                            </td>
+                        </tr>
+                    </table>
+                </mat-cell>
         </ng-container>
         <ng-container matColumnDef="active">
             <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <mat-slide-toggle (click)="fetch1()" [(ngModel)]="element.active"></mat-slide-toggle>
-                 </mat-cell>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="picture">
             <mat-header-cell *matHeaderCellDef> Picture </mat-header-cell>
@@ -55,20 +65,20 @@
             <mat-cell *matCellDef="let element">
                 <table>
                     <tr *ngFor="let varient of element.variants">
-                        <td> 
-                              <i class="fa fa-inr"></i>
-                              {{varient.mrp}}/  <i class="fa fa-inr"></i>{{varient.price}}
-                              <button class="ml-1" mat-icon-button color="primary" (click)="edit(varient,element.name)">
+                        <td>
+                            <i class="fa fa-inr"></i>
+                            {{varient.mrp}}/ <i class="fa fa-inr"></i>{{varient.price}}
+                            <button class="ml-1" mat-icon-button color="primary" (click)="edit(varient,element.name)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            </td>
+                        </td>
                     </tr>
                 </table>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef>  Actions </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button mat-icon-button color="primary" (click)="editProduct(element)">
                     <mat-icon>edit</mat-icon>

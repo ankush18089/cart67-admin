@@ -19,23 +19,33 @@
     </div>
     <div class="row">
         <div class="col">
-            <mat-form-field appearance="fill">
-                <mat-label>choose collection</mat-label>
-                <mat-select [formControlName]="'tags'" multiple>
-                  <mat-option *ngFor="let collection of collections" [value]="collection">{{collection.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+            <mat-form-field >
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let tag of selectedTags" [selectable]="true" [removable]="true"
+                        (removed)="remove(tag)">
+                        {{tag.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Tag" #tagInput  [matAutocomplete]="auto"
+                        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let tag of tags" [value]="tag">
+                        {{tag.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
         </div>
         <div class="col">
             <mat-form-field appearance="fill">
                 <mat-label>choose category</mat-label>
-                <mat-select [formControlName]="'category'" [(value)]="selectedCategory">
-                  <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+                <mat-select [(value)]="selectedCategory" (selectionChange)="categoryChange()">
+                    <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </div>
     </div>
-   
+
     <div class="row mt-2">
         <button [disabled]="this.productForm.invalid" class="mr-2" mat-raised-button color="primary"
             (click)="save()">Save</button>

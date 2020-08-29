@@ -1,20 +1,31 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 @Component({
   selector: 'app-edit-product-info',
   templateUrl: './edit-product-info.component.html',
   styleUrls: ['./edit-product-info.component.css']
 })
 export class EditProductInfoComponent implements OnInit {
+
+  visible = true;
+  separatorKeysCodes: string[] = ['COMMA'];
+  filteredFruits: Observable<string[]>;
+  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
   productForm: FormGroup;
   varient: any;
   mrp: number;
-  collections: any[] = [];
+  tags: any[] = [];
   categories: any[] = [];
   selectedCategory: any = null;
+  selectedTags: any[] = [];
+  productsTags: any[] = [];
   constructor(
     private spinner: NgxSpinnerService,
     private product: ProductService,
@@ -24,6 +35,13 @@ export class EditProductInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.product.getCollections('0', '200').subscribe(res => {
+      this.tags = res['content'];
+    });
+    this.product.getCategories().subscribe((res: any[]) => {
+      this.categories = res;
+    });
+
     this.productForm = this.formBuilder.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
@@ -42,22 +60,35 @@ export class EditProductInfoComponent implements OnInit {
       this.productForm.get('name').setValue(res.name);
       this.productForm.get('store_id').setValue(res.store_id);
       this.productForm.get('picture').setValue(res.picture);
-      this.productForm.get('tags').setValue(res.tags);
+      if (res.tags) {
+        this.productsTags = res.tags;
+        this.tags.forEach(alltag => {
+          this.productsTags.forEach(productTag => {
+            if (productTag.id === alltag.id) {
+              this.selectedTags.push(productTag);
+            }
+          });
+        });
+      }
+      console.log(JSON.stringify(this.selectedTags));
+      this.productForm.get('tags').setValue(this.selectedTags);
       this.productForm.get('variants').setValue(res.variants);
-      this.productForm.get('category').setValue(res.category);
+      if (res.category) {
+        this.categories.forEach(element => {
+          if (element.id === res.category.id) {
+            this.selectedCategory = element;
+          }
+        });
+      }
+      this.productForm.get('category').setValue(this.selectedCategory);
       this.productForm.get('product_type').setValue(res.product_type);
       this.productForm.get('brand').setValue(res.brand);
       this.productForm.get('active').setValue(res.active);
       this.productForm.get('featured').setValue(res.featured);
     });
-
-
-    this.product.getCollections('0', '200').subscribe(res => {
-      this.collections = res['content'];
-    });
-    this.product.getCategories().subscribe((res: any[]) => {
-      this.categories = res;
-    });
+  }
+  categoryChange() {
+    this.productForm.get('category').setValue(this.selectedCategory);
   }
   save() {
     this.spinner.show();
@@ -72,4 +103,15 @@ export class EditProductInfoComponent implements OnInit {
   close() {
     this.bottomSheetRef.dismiss(false);
   }
+
+  remove(tag: any): void {
+    this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.tagInput.nativeElement.value = '';
+    this.selectedTags.push(event.option.value);
+    this.selectedTags = this.selectedTags.filter((n, i) => this.selectedTags.indexOf(n) === i);
+  }
+
 }

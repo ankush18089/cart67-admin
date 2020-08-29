@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class CollectionsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'picture','active','sequence','tag', 'action'];
+  displayedColumns: string[] = ['name', 'picture','active','sequence', 'action'];
   result: any[]=[];
   length: number;
   constructor(

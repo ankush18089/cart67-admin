@@ -15,7 +15,7 @@
             <div class="col-md-4">
                 <mat-form-field>
                     <mat-label>Image</mat-label>
-                    <input matInput placeholder="image_url" formControlName="image_url" required>
+                    <input matInput placeholder="image_url" formControlName="image_url">
                 </mat-form-field>
                 <div class="alert alert-danger"
                     *ngIf="collectionForm.controls['image_url'].value && collectionForm.controls['image_url'].invalid">
@@ -42,16 +42,6 @@
                 <mat-slide-toggle formControlName="show_on_search">Show on serach</mat-slide-toggle>
             </div>
 
-            <div class="col">
-                <mat-form-field>
-                    <mat-label>Choose tag</mat-label>
-                    <mat-select [(value)]="selectedTagId" (selectionChange)="tagChange()">
-                        <mat-option *ngFor="let tag of tags" [value]="tag.id">
-                            {{tag.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
         </div>
         <div class="row mt-2 d-flex justify-content-center">
             <button type="submit" mat-raised-button color="accent">Save</button>
