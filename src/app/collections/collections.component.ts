@@ -17,6 +17,7 @@ export class CollectionsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'picture','active','sequence', 'action'];
   result: any[]=[];
+  isLoading=true;
   length: number;
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -49,6 +50,7 @@ export class CollectionsComponent implements OnInit {
       this.spinner.hide();
       this.result = res['content'];
       this.length = res['totalElements'];
+      this.isLoading=false;
     }, error => {
       console.log('error occurred while getting data from server : ' + error.status);
       this.spinner.hide();
@@ -56,13 +58,16 @@ export class CollectionsComponent implements OnInit {
   }
 
   fetch() {
+    this.isLoading=true;
     this.spinner.show();
     this.product.getCollections(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString()).subscribe(res => {
       this.result = res['content'];
       this.length = res['totalElements'];
       this.spinner.hide();
+      this.isLoading=false;
     }, error => {
       this.spinner.hide();
+      this.isLoading=false;
       console.log('error occurred while getting data from server  : ' + error.status);
     });
   }

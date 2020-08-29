@@ -17,11 +17,12 @@ import { EditProductInfoComponent } from '../edit-product-info/edit-product-info
 })
 export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'picture','category','tags','active', 'varient',  'action'];
+  displayedColumns: string[] = ['name', 'picture', 'category', 'tags', 'active', 'varient', 'action'];
   result: any[] = [];
   myForm = this.fb.group({ query: [''] });
   value: any;
   length: number;
+  isLoading=true;
   constructor(
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.product.storeId.next(localStorage.getItem('store'));
     this.product.products.subscribe(res => {
       this.result = res;
-    })
+    });
 
     this.product.getStores().subscribe(res => {
       this.product.stores.next(res['content']);
@@ -63,30 +64,50 @@ export class HomeComponent implements OnInit {
       this.result = res['content'];
       this.product.products.next(res['content']);
       this.length = res['totalElements'];
+      this.isLoading=false;
     }, error => {
+      this.isLoading=false;
       console.log('error occurred while getting data from server : ' + error.status);
       this.spinner.hide();
     });
   }
   fetch() {
     this.spinner.show();
+    this.isLoading=true;
     this.myForm.get('query').setValue('');
     this.product.getProducts(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString(), '').subscribe(res => {
       this.result = res['content'];
       this.length = res['totalElements'];
       this.spinner.hide();
+      this.isLoading=false;
     }, error => {
       this.spinner.hide();
+      this.isLoading=false;
       console.log('error occurred while getting data from server  : ' + error.status);
     });
   }
 
-  fetch1() {
+  slide() {
     this.snackBar.openFromComponent(PopupmessageComponent, {
-      duration: 2 * 1000,
+      duration: 4 * 1000,
       data: { data: 'Please use edit option to update this' }
     });
     this.fetch();
+  }
+  clear() {
+    this.myForm.get('query').setValue('');
+    this.isLoading=true;
+    this.product.getProducts('0', '5', '').subscribe(res => {
+      this.spinner.hide();
+      this.result = res['content'];
+      this.product.products.next(res['content']);
+      this.length = res['totalElements'];
+      this.isLoading=false;
+    }, error => {
+      this.isLoading=false;
+      console.log('error occurred while getting data from server : ' + error.status);
+      this.spinner.hide();
+    });
   }
 
   edit(varient: any, name: string): void {
@@ -138,12 +159,22 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   find() {
+    if (this.myForm.get('query').value === '') {
+      this.snackBar.openFromComponent(PopupmessageComponent, {
+        duration: 2 * 1000,
+        data: { data: 'Please enter search value' }
+      });
+      return;
+    }
     this.spinner.show();
+    this.isLoading=true;
     this.product.getProducts(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString(), this.myForm.get('query').value).subscribe(res => {
       this.result = res['content'];
       this.length = res['totalElements'];
       this.spinner.hide();
+      this.isLoading=false;
     }, error => {
+      this.isLoading=false;
       console.log('error occurred while getting data from server   : ' + error.status);
       this.spinner.hide();
     });

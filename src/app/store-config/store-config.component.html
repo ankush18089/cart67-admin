@@ -1,0 +1,23 @@
+<div *ngIf="store" class="card" style="width: 100%;">
+    <div class="card-body">
+        <h6 class="font-weight-bold mb-3">Store</h6>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Name <span class="pull-right">{{store.name}}</span>
+            </li>
+            <li class="list-group-item">
+                Open <span class="pull-right"> {{store.open}}</span>
+            </li>
+            <li class="list-group-item">
+                Minimum amount <span class="pull-right">  <i class="fa fa-inr"></i> {{store.min_amount}}</span>
+            </li>
+            <li class="list-group-item">
+                Delivery charges <span class="pull-right">  <i class="fa fa-inr"></i> {{store.delivery_charges}}</span>
+            </li>
+            <li class="list-group-item">
+                Delivery free above <span class="pull-right">  <i class="fa fa-inr"></i> {{store. delivery_free_above}}</span>
+            </li>
+        </ul>
+        <div class="row mt-2 d-flex justify-content-center"> <button mat-raised-button color="accent" (click)="edit()">Edit store</button></div>
+    </div>
+</div>

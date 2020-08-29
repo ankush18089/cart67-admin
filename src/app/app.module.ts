@@ -62,6 +62,8 @@ import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.componen
 import { EditProductInfoComponent } from './edit-product-info/edit-product-info.component';
 import { CategoryComponent } from './category/category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { StoreConfigComponent } from './store-config/store-config.component';
+import { EditStoreConfigComponent } from './edit-store-config/edit-store-config.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -83,7 +85,9 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     EditDashboardComponent,
     EditProductInfoComponent,
     CategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    StoreConfigComponent,
+    EditStoreConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -138,6 +142,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     EditprofileComponent,
     EditCategoryComponent,
     EditDashboardComponent,
+    EditStoreConfigComponent,
     EditCollectionComponent,
     EditProductInfoComponent,
     AddOfferComponent

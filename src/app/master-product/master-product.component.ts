@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { EditproductComponent } from '../editproduct/editproduct.component';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupmessageComponent } from '../popupmessage/popupmessage.component';
@@ -22,8 +18,8 @@ export class MasterProductComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-     private snackBar: MatSnackBar,
-     private product: ProductService) { }
+    private snackBar: MatSnackBar,
+    private product: ProductService) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -54,6 +50,7 @@ export class MasterProductComponent implements OnInit {
     });
   }
   fetch() {
+    this.myForm.get('query').setValue('');
     this.product.getMasterProducts(this.paginator.pageIndex.toString(), this.paginator.pageSize.toString()).subscribe(res => {
       this.products = res['content'];
       this.spinner.hide();
@@ -64,15 +61,22 @@ export class MasterProductComponent implements OnInit {
     });
   }
   add(product: any) {
-    this.product.addProductToSore(JSON.stringify(product)).subscribe(res => {
+    this.product.addProductToSore(JSON.stringify(product)).subscribe(() => {
       this.snackBar.openFromComponent(PopupmessageComponent, {
         duration: 2 * 1000,
-        data: { data: 'Added  successfully'}
+        data: { data: 'Added  successfully' }
       });
     })
   }
 
   find() {
+    if (this.myForm.get('query').value === '') {
+      this.snackBar.openFromComponent(PopupmessageComponent, {
+        duration: 2 * 1000,
+        data: { data: 'Please enter search value' }
+      });
+      return;
+    }
     this.spinner.show();
     this.product.searchMasterProducts('0', '5', this.myForm.get('query').value).subscribe(res => {
       this.products = res['content'];

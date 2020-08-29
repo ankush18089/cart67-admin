@@ -1,24 +1,26 @@
-<div *ngIf="this.result.length>0;else noproduct">
-    <form [formGroup]="myForm" class="example-form" (submit)="find()">
-        <div class="row" style="background-color: white;">
+<form [formGroup]="myForm" class="example-form" (submit)="find()">
+    <div class="row" style="background-color: white;">
 
-            <div class="col-md-2">
-                <mat-form-field style="width: 100%;">
-                    <mat-label>Search product</mat-label>
-                    <input matInput type="text" placeholder="Ex. Patabji" formControlName="query">
-                </mat-form-field>
-                <button mat-button *ngIf="this.myForm.controls['query'].value!=''" matSuffix mat-icon-button
-                    aria-label="Clear" (click)="fetch()">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </div>
-            <div class="col-md-1"><button #search mat-button type="submit">
-                    <span class="material-icons">
-                        search
-                    </span>
-                </button></div>
+        <div class="col-md-3">
+            <mat-form-field >
+                <mat-label>Search product</mat-label>
+                <input matInput type="text" placeholder="Ex. Patabji" formControlName="query">
+            </mat-form-field>
+            <button mat-button *ngIf="this.myForm.controls['query'].value!=''" matSuffix mat-icon-button
+                aria-label="Clear" (click)="clear()">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
-    </form>
+        <div class="col-md-1"><button #search mat-button type="submit">
+                <span class="material-icons">
+                    search
+                </span>
+            </button></div>
+    </div>
+</form>
+
+<div *ngIf="this.result.length>0;else noproduct">
+
     <mat-table [dataSource]="result">
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -35,19 +37,19 @@
         <ng-container matColumnDef="tags">
             <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                    <table *ngIf="element.tags.length>0">
-                        <tr *ngFor="let tag of element.tags">
-                            <td>
-                               {{tag.name}}
-                            </td>
-                        </tr>
-                    </table>
-                </mat-cell>
+                <table *ngIf="element.tags.length>0">
+                    <tr *ngFor="let tag of element.tags">
+                        <td>
+                            {{tag.name}}
+                        </td>
+                    </tr>
+                </table>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="active">
             <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <mat-slide-toggle (click)="fetch1()" [(ngModel)]="element.active"></mat-slide-toggle>
+                <mat-slide-toggle (click)="slide()" [(ngModel)]="element.active"></mat-slide-toggle>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="picture">
@@ -100,8 +102,8 @@
 </div>
 <ng-template #noproduct>
     <div class="jumbotron d-flex align-items-center">
-        <div class="container">
-            <h2>No products in this store yet, Please use master product page to add items in this store.</h2>
+        <div class="container" *ngIf="!isLoading">
+            <h2>No Product in this store yet.</h2>
         </div>
     </div>
 </ng-template>

@@ -165,4 +165,12 @@ export class ProductService {
   getStores() {
     return this.http.get('https://dapi.carvia.tech/cart67-product/api/store');
   }
+
+  getStore(id:string) {
+    return this.http.get(`https://dapi.carvia.tech/cart67-product/api/store/${id}`);
+  }
+
+  updateStore(id: number, data: string) {
+    return this.http.put(`https://dapi.carvia.tech/cart67-product/api/store/${id}`, data, this.httpOptions);
+  }
 }

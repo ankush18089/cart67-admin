@@ -60,8 +60,8 @@
 </div>
 <ng-template #noproduct>
     <div class="jumbotron d-flex align-items-center">
-        <div class="container">
-            <h2>No collections in this store yet, Please use master product page to add items in this store.</h2>
+        <div class="container" *ngIf="!isLoading">
+            <h2>No categories in this store yet.</h2>
         </div>
     </div>
 </ng-template>

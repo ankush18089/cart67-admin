@@ -9,6 +9,7 @@ import { MasterProductComponent } from './master-product/master-product.componen
 import { CollectionsComponent } from './collections/collections.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoryComponent } from './category/category.component';
+import { StoreConfigComponent } from './store-config/store-config.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'nostore', component: StoreMessageComponent },
+  { path: 'store', component: StoreConfigComponent },
   { path: 'offers', component: OffersComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: HomeComponent }

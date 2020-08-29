@@ -16,6 +16,7 @@ export class CategoryComponent implements OnInit {
   displayedColumns: string[] = ['name', 'image', 'active', 'sequence', 'bg_color', 'action'];
   result: any[] = [];
   length: number;
+  isLoading=true;
   constructor(
     private bottomSheet: MatBottomSheet,
     private snackBar: MatSnackBar,
@@ -46,12 +47,15 @@ export class CategoryComponent implements OnInit {
     this.fetch();
   }
   fetch() {
+    this.isLoading=true;
     this.product.getCategories().subscribe((res: any[]) => {
       this.spinner.hide();
       this.result = res;
+      this.isLoading=false;
     }, error => {
       console.log('error occurred while getting data from server : ' + error.status);
       this.spinner.hide();
+      this.isLoading=false;
     });
   }
   fetch1() {

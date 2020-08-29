@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['title', 'active', 'type', 'sequence', 'action'];
   result: any[] = [];
+  isLoading=true;
   constructor(
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
@@ -102,13 +103,16 @@ export class DashboardComponent implements OnInit {
     });
   }
   fetch() {
+    this.isLoading=true;
     this.spinner.show();
     this.product.getDashboardItems().subscribe((res: any[]) => {
       this.result = res;
       this.spinner.hide();
+      this.isLoading=false;
     }, error => {
       console.log('error occurred while getting data from server : ' + error.status);
       this.spinner.hide();
+      this.isLoading=false;
     });
   }
 

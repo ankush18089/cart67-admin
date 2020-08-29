@@ -1,0 +1,47 @@
+<div class="card-header">
+    Edit store</div>
+<div class="card-body">
+    <form [formGroup]="storeForm" (ngSubmit)="save()">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Mininum delivery</mat-label>
+                    <input matInput type="number" placeholder="Mininum devliveery" formControlName="min_amount" required>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Delivery charges</mat-label>
+                    <input matInput type="number" placeholder="Delivery charges" formControlName="delivery_charges" required>
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-slide-toggle formControlName="open">Active</mat-slide-toggle>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Delivery free above</mat-label>
+                    <input matInput type="number" placeholder="Delivery charges" formControlName="delivery_free_above" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <button type="submit" mat-raised-button color="accent">Save</button>
+
+        </div>
+
+    </form>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
+</ngx-spinner>
