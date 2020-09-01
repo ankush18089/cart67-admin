@@ -1,33 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { ProductService } from '../services/product.service';
-
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { DataService } from './../services/data.service';
+import { auth } from 'firebase/app';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm = this.fb.group({ username: [''], password: [''] });
   constructor(
+    private data: DataService,
     private fb: FormBuilder,
-    private auth: AuthService,
-    private route: Router) { }
-  error: string;
+    private route: Router,
+    private afs: AngularFirestore,
+    private afAuth: AngularFireAuth) { }
   ngOnInit(): void {
-    this.error = '';
-  }
-  login() {
-    const user = { username: this.loginForm.get('username').value, password: this.loginForm.get('password').value };
-    this.auth.login(user).subscribe(res => {
-      if (res) {
-        this.route.navigate(['home']);
-      } else {
-        this.error = 'Error occurred !! please re-try.';
-      }
-    });
+
   }
 
+  login() {
+    this.afAuth.signInWithPopup(new auth.GoogleAuthProvider).then(res => {
+      this.route.navigate(["/home"]);
+    }, err => {
+      console.log(err);
+    });
+  }
 }

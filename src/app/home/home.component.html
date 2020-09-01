@@ -1,111 +1,12 @@
-<form [formGroup]="myForm" class="example-form" (submit)="find()">
-    <div class="row" style="background-color: white;">
-
-        <div class="col-md-3">
-            <mat-form-field >
-                <mat-label>Search product</mat-label>
-                <input matInput type="text" placeholder="Ex. Patabji" formControlName="query">
-            </mat-form-field>
-            <button mat-button *ngIf="this.myForm.controls['query'].value!=''" matSuffix mat-icon-button
-                aria-label="Clear" (click)="clear()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
-        <div class="col-md-1"><button #search mat-button type="submit">
-                <span class="material-icons">
-                    search
-                </span>
-            </button></div>
-    </div>
-</form>
-
-<div *ngIf="this.result.length>0;else noproduct">
-
-    <mat-table [dataSource]="result">
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="category">
-            <mat-header-cell *matHeaderCellDef>Category </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <label *ngIf="element.category">{{element.category.name}}</label>
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="tags">
-            <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <table *ngIf="element.tags.length>0">
-                    <tr *ngFor="let tag of element.tags">
-                        <td>
-                            {{tag.name}}
-                        </td>
-                    </tr>
-                </table>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="active">
-            <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <mat-slide-toggle (click)="slide()" [(ngModel)]="element.active"></mat-slide-toggle>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="picture">
-            <mat-header-cell *matHeaderCellDef> Picture </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <img *ngIf="element.picture" width="20%" src={{element.picture}} class="" alt="Image unavailable">
-                <img *ngIf="!element.picture" width="20%"
-                    src="https://s3.shunyafoundation.com/s3/62fb0092aaed7a3bbdc452e9cda3d9ed0a8bb7e0/no-image.png"
-                    class="" alt="Image unavailable">
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="varient">
-            <mat-header-cell *matHeaderCellDef> MRP/Price </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <table>
-                    <tr *ngFor="let varient of element.variants">
-                        <td>
-                            <i class="fa fa-inr"></i>
-                            {{varient.mrp}}/ <i class="fa fa-inr"></i>{{varient.price}}
-                            <button class="ml-1" mat-icon-button color="primary" (click)="edit(varient,element.name)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="editProduct(element)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-
-                <button mat-icon-button color="warn" (click)="delete(element.id)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-
-
-    <mat-paginator [length]="length" [pageSizeOptions]="[5,10,50, 100]" (page)="fetch()">
-    </mat-paginator>
+<a mat-raised-button routerLink="/profile">profile</a>
+<br> Available categories are :
+<br>
+<div *ngFor="let category of categories">
+    {{category.name}}
 </div>
-<ng-template #noproduct>
-    <div class="jumbotron d-flex align-items-center">
-        <div class="container" *ngIf="!isLoading">
-            <h2>No Product in this store yet.</h2>
-        </div>
-    </div>
-</ng-template>
-<ngx-spinner bdColor="rgba(255,255,255, 0.5)" color="#673AB7" type="ball-beat la-dark">
-</ngx-spinner>
+<br>
+<br> Available course are :
+
+<div *ngFor="let course of res">
+    {{course.name}}
+</div>

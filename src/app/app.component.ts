@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductService } from './services/product.service';
+import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  isLoggedIn:Boolean;
-  title = 'cart67-admin';
-  constructor( private product: ProductService,) {
-    this.product.isLoggedIn.subscribe(res => {
-      this.isLoggedIn = res;
-    });
+export class AppComponent implements OnInit {
+ 
+  constructor(
+   ) {
   }
+  ngOnInit() {
+
+  }
+
 }

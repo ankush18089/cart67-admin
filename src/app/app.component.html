@@ -1,24 +1,2 @@
-<mat-sidenav-container class="example-container">
-  <mat-sidenav *ngIf="isLoggedIn" mode="side" opened>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/profile"><i class="fas fa-user-circle"></i> <span class="ml-3">My Profile</span></a>
-      <a mat-list-item routerLink="/home"><i class="fa fa-product-hunt"></i> <span class="ml-3">Products</span></a>
-      <a mat-list-item routerLink="/offers"><i class="fa fa-gift"></i> <span class="ml-3">Manage Offers</span></a>
-      <a mat-list-item routerLink="/collections"><i class="fa fa-object-group"></i> <span class="ml-3">Collections</span></a>
-      <a mat-list-item routerLink="/category"><i class="fa fa-object-group"></i> <span class="ml-3">Categories</span></a>
-      <a mat-list-item routerLink="/dashboard"><i class="fa fa-home"></i> <span class="ml-3">Dashboard</span></a>
-      <a mat-list-item routerLink="/store"><i class="fa fa-shopping-bag"></i> <span class="ml-3">Store</span></a>
-      <a mat-list-item routerLink="/master"><i class="fa fa-archive"></i> <span class="ml-3">Master Products</span></a>
-    </mat-nav-list>
-  </mat-sidenav>
-
-  <mat-sidenav-content style="overflow-x: hidden;">
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container> 
-
-
-
-
-
+<router-outlet>
+</router-outlet>

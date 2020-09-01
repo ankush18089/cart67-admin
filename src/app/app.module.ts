@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { ProfileComponent } from './profile/profile.component';
-import { EditprofileComponent } from './editprofile/editprofile.component';
+
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,54 +41,35 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { SerializePipe } from './serialize.pipe';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { DatePipe } from '@angular/common';
-import { AuthService } from './services/auth.service';
-import { TokenInterceptor } from './services/token-interceptor.service';
-import { EditproductComponent } from './editproduct/editproduct.component';
-import { HeaderComponent } from './header/header.component';
-import { StoreMessageComponent } from './store-message/store-message.component';
-import { OffersComponent } from './offers/offers.component';
-import { AddOfferComponent } from './add-offer/add-offer.component';
-import { MasterProductComponent } from './master-product/master-product.component';
-import { PopupmessageComponent } from './popupmessage/popupmessage.component';
-import { CollectionsComponent } from './collections/collections.component';
-import { EditCollectionComponent } from './edit-collection/edit-collection.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
-import { EditProductInfoComponent } from './edit-product-info/edit-product-info.component';
-import { CategoryComponent } from './category/category.component';
-import { EditCategoryComponent } from './edit-category/edit-category.component';
-import { StoreConfigComponent } from './store-config/store-config.component';
-import { EditStoreConfigComponent } from './edit-store-config/edit-store-config.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+var firebaseConfig = {
+  apiKey: "AIzaSyDzXMGwPuPR4ABsjRgFBsuU9h-yhM7s_eo",
+  authDomain: "bootcamp-849e2.firebaseapp.com",
+  databaseURL: "https://bootcamp-849e2.firebaseio.com",
+  projectId: "bootcamp-849e2",
+  storageBucket: "bootcamp-849e2.appspot.com",
+  messagingSenderId: "685537680602",
+  appId: "1:685537680602:web:35e12a049299ef4242d9e3",
+  measurementId: "G-YMQ3DZZ8Y5"
+};
 @NgModule({
   declarations: [
-    ProfileComponent,
-    EditprofileComponent,
-    HeaderComponent,
     AppComponent,
-    HomeComponent,
     LoginComponent,
-    SerializePipe,
-    EditproductComponent,
-    StoreMessageComponent,
-    OffersComponent,
-    AddOfferComponent,
-    MasterProductComponent,
-    PopupmessageComponent,
-    CollectionsComponent,
-    EditCollectionComponent,
-    DashboardComponent,
-    EditDashboardComponent,
-    EditProductInfoComponent,
-    CategoryComponent,
-    EditCategoryComponent,
-    StoreConfigComponent,
-    EditStoreConfigComponent
+    HomeComponent,
+    MyProfileComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireAuthModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -137,25 +117,11 @@ import { EditStoreConfigComponent } from './edit-store-config/edit-store-config.
     MatTreeModule
   ],
   entryComponents: [
-    PopupmessageComponent,
-    EditproductComponent,
-    EditprofileComponent,
-    EditCategoryComponent,
-    EditDashboardComponent,
-    EditStoreConfigComponent,
-    EditCollectionComponent,
-    EditProductInfoComponent,
-    AddOfferComponent
+
   ],
   providers: [
-    DatePipe,
-    SerializePipe,
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }],
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

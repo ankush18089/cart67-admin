@@ -1,0 +1,10 @@
+<a mat-raised-button routerLink="/home">home</a>
+<button mat-raised-button class="primary" (click)="logout()">Logut</button>
+
+<br>
+<br>
+<label *ngIf="name"> {{name}} you have registered for below courses: -  </label>
+
+<div *ngFor="let enrollment of enrollments">
+    {{enrollment.course.name}}
+</div>
